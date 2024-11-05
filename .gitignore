@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+__pycache__
+*.py[cod]
+*.pyo
+*.pyd
+
+# Flask
+instance/
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Virtual environment
+myvenv/
+
+.idea/
+.vscode/
+.venv*/
+venv*/
+__pycache__/
+dist/
+.coverage*
+htmlcov/
+.tox/
+docs/_build/
