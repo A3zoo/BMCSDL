@@ -9,9 +9,10 @@ app = Flask(__name__)
 
 app.secret_key = "ENTER_YOUR_SECRET_KEY"
 
+
 @app.route('/')
 def index():
-    return render_template('app/html/login_mh1.html', duy = "kkkkkkkk")
+    return render_template('login.html')
 
 app.register_blueprint(auth_views)
 
