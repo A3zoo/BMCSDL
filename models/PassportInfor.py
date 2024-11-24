@@ -1,22 +1,24 @@
 from .base import Base
 from sqlalchemy.orm import mapped_column, Mapped
-from sqlalchemy import UUID, Date, String, Integer,Boolean, CheckConstraint, ForeignKey, CHAR, Nu
+from sqlalchemy import UUID, Date, String, Integer,Boolean, CheckConstraint, ForeignKey, CHAR, LargeBinary
 import uuid
 from pydantic import BaseModel, Field, UUID4, ConfigDict
 from typing import Optional
 from datetime import date
-from database import user_Session as Session
-
+from sqlalchemy.inspection import inspect
+from database import get_user_session
 
 class PassportData(Base):
     __tablename__ = 'PASSPORTREGISTION'
     __table_args__ = (
-        CheckConstraint("CoGanChip IN ('Y', 'N')", name='ck_CoGanChip'),
-        {'extend_existing': True, 'quote': False}
+       {'extend_existing': True, 'quote': False, 'schema': 'SEC_MGR'}
     )
 
-    Id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, name='ID'
+    Id: Mapped[uuid.UUID] =  mapped_column(
+        LargeBinary(16),  # Sử dụng LargeBinary(16) để tương ứng với RAW(16) trong Oracle
+        primary_key=True, 
+        default=lambda: uuid.uuid4().bytes,  # Lấy bytes từ UUID
+        name='ID'
     )
     HoVaTen: Mapped[str] = mapped_column(String(100), nullable=False, name='HOVATEN')
     GioiTinh: Mapped[int] = mapped_column(Integer, nullable=True, name='GIOITINH')
@@ -45,33 +47,34 @@ class PassportData(Base):
 
 class PassportDataModel(BaseModel):
     model_config = ConfigDict(from_attributes=True)
-    Id: UUID4 = Field(alias="ID")
-    HoVaTen: str = Field(..., max_length=100, alias="HOVATEN")
-    GioiTinh: Optional[int] = Field(None, alias="GIOITINH")
-    SinhNgay: Optional[date] = Field(None, alias="SINHNGAY")
-    NoiSinh: Optional[str] = Field(None, max_length=100, alias="NOISINH")
-    SoCCCD: Optional[str] = Field(None, max_length=20, alias="SOCCCD")
-    NgayCapCCCD: Optional[date] = Field(None, alias="NGAYCAPCCCD")
-    DanToc: Optional[str] = Field(None, max_length=50, alias="DANTOC")
-    TonGiao: Optional[str] = Field(None, max_length=50, alias="TONGIAO")
-    SoDienThoai: Optional[str] = Field(None, max_length=15, alias="SODIENTHOAI")
-    DiaChiDangKyThuongTru: Optional[str] = Field(None, max_length=200, alias="DIACHIDANGKYTHUONGTRU")
-    DiaChiDangKyTamTru: Optional[str] = Field(None, max_length=200, alias="DIACHIDANGKYTAMTRU")
-    NgheNghiep: Optional[str] = Field(None, max_length=100, alias="NGHENGHIEP")
-    CoQuan: Optional[str] = Field(None, max_length=100, alias="COQUAN")
-    HoTenCha: Optional[str] = Field(None, max_length=100, alias="HOTENCHA")
-    NgaySinhCha: Optional[date] = Field(None, alias="NGAYSINHCHA")
-    HoTenMe: Optional[str] = Field(None, max_length=100, alias="HOTENME")
-    NgaySinhMe: Optional[date] = Field(None, alias="NGAYSINHME")
-    HoTenVoChong: Optional[str] = Field(None, max_length=100, alias="HOTENVOCHONG")
-    NgaySinhVoChong: Optional[date] = Field(None, alias="NGAYSINHVOCHONG")
-    NoiDungDeNghi: Optional[str] = Field(None, max_length=500, alias="NOIDUNGDENGHI")
-    CoGanChip: Optional[int] = Field(None, alias="COGANCHIP")
-    NoiTiepNhan: Optional[str] = Field(None, max_length=100, alias="NOITIEPNHAN")
-    DiaChiNopHoSo: Optional[str] = Field(None, max_length=200, alias="DIACHINOPHOSO")
-    TrangThai: Optional[int] = Field(None, alias="TRANGTHAI")
+    Id: Optional[UUID4] 
+    HoVaTen: Optional[str]
+    GioiTinh: Optional[int] 
+    SinhNgay: Optional[date] 
+    NoiSinh: Optional[str] 
+    SoCCCD: Optional[str] 
+    NgayCapCCCD: Optional[date] 
+    DanToc: Optional[str] 
+    TonGiao: Optional[str] 
+    SoDienThoai: Optional[str] 
+    DiaChiDangKyThuongTru: Optional[str] 
+    DiaChiDangKyTamTru: Optional[str]
+    NgheNghiep: Optional[str] 
+    CoQuan: Optional[str] 
+    HoTenCha: Optional[str] 
+    NgaySinhCha: Optional[date] 
+    HoTenMe: Optional[str]
+    NgaySinhMe: Optional[date] 
+    HoTenVoChong: Optional[str] 
+    NgaySinhVoChong: Optional[date] 
+    NoiDungDeNghi: Optional[str] 
+    CoGanChip: Optional[int]
+    NoiTiepNhan: Optional[str]
+    DiaChiNopHoSo: Optional[str] 
+    TrangThai: Optional[int] 
 
 def create_passport_data(payload: PassportDataModel):
+    Session = get_user_session()
     with Session() as session:
         passport = PassportData(
             Id=payload.Id,
@@ -106,6 +109,7 @@ def create_passport_data(payload: PassportDataModel):
 
 
 def get_passport_data(cccd):
+    Session = get_user_session()
     with Session() as session:
         passport = session.query(PassportData).filter_by(SoCCCD=cccd).first()
         if passport:
@@ -115,17 +119,19 @@ def get_passport_data(cccd):
 
 
 def update_status_passport_data_by_cccd(cccd, status):
-    with Session() as session:
-        passport = session.query(PassportData).filter_by(SoCCCD=cccd).first()
+    Session = get_user_session()
+    with Session() as session_db:
+        passport = session_db.query(PassportData).filter_by(SoCCCD=cccd).first()
         if passport:
             passport.TrangThai = status
-            session.commit()
+            session_db.commit()
             return PassportDataModel.model_validate(passport) 
         else:
             return None
 
 
 def get_all_passport_data():
-    with Session() as session:
-        passport_data_list = session.query(PassportData).all()
+    Session = get_user_session()
+    with Session() as session_db:
+        passport_data_list = session_db.query(PassportData).all()
         return [PassportDataModel.model_validate(passport) for passport in passport_data_list]

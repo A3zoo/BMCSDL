@@ -1,6 +1,7 @@
 from flask import Blueprint, request, render_template, redirect, flash
 from flask import session, redirect, url_for, request
 from models.UserAccount import get_account_by_cccd_pw
+from models.PassportInfor import get_all_passport_data, get_passport_data
 
 auth_views = Blueprint("auth", __name__)
 
@@ -21,15 +22,18 @@ def login():
         session['vt'] = result.UserType
         # RESIDENT, XT, XD, LT, GS
         if session['vt'] == 'XT':
-            return redirect("/")
+            data = get_all_passport_data()
+            return render_template("app/html/danh_sach_yeu_cau_cho_xac_thuc_mh4.html", listpassportdata =  data)
         elif session['vt'] == 'XD':
-            return redirect("/")
+            data = get_all_passport_data()
+            return render_template("app/html/danh_sach_yeu_cau_cho_phe_duyet_mh7.html", listpassportdata =  data)
         elif session['vt'] == 'LT':
-            return redirect("/")
+            data = get_all_passport_data()
+            return render_template("app/html/danh_sach_ket_qua_phe_duyet_mh10.html", listpassportdata =  data)
         elif session['vt'] == 'GS':
-            return redirect("/")
-        return redirect("/")
-
+            data = get_all_passport_data()
+            return render_template("app/html/danh_sach_ket_qua_phe_duyet_mh10.html", listpassportdata =  data)
+        return render_template("profile.html", duy =  result)
     return render_template("login.html")
 
 

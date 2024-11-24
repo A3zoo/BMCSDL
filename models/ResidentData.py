@@ -5,13 +5,12 @@ import uuid
 from pydantic import BaseModel, Field, ConfigDict
 from typing import Optional
 from datetime import date
-from database import user_Session as Session
-
+from database import get_user_session
 
 class ResidentData(Base):
     __tablename__ = 'RESIDENT'
     __table_args__ = (
-        {'extend_existing': True, 'quote': False}
+        {'extend_existing': True, 'quote': False, 'schema': 'SEC_MGR'}
     )
 
     Id: Mapped[uuid.UUID] = mapped_column(
@@ -40,31 +39,32 @@ class ResidentData(Base):
 
 class ResidentDataModel(BaseModel):
     model_config = ConfigDict(from_attributes=True)
-    Id: UUID = Field(..., alias="ID")
-    HoVaTen: str = Field(..., max_length=100)
-    GioiTinh: Optional[int] = Field(None, ge=0, le=1)  # Giới tính có thể là 0 hoặc 1
-    SinhNgay: Optional[date] = None
-    NoiSinh: Optional[str] = Field(None, max_length=100)
-    SoCCCD: Optional[str] = Field(None, max_length=20)
-    NgayCapCCCD: Optional[date] = None
-    DanToc: Optional[str] = Field(None, max_length=50)
-    TonGiao: Optional[str] = Field(None, max_length=50)
-    SoDienThoai: Optional[str] = Field(None, max_length=15)
-    DiaChiDangKyThuongTru: Optional[str] = Field(None, max_length=200)
-    DiaChiDangKyTamTru: Optional[str] = Field(None, max_length=200)
-    NgheNghiep: Optional[str] = Field(None, max_length=100)
-    CoQuan: Optional[str] = Field(None, max_length=100)
-    HoTenCha: Optional[str] = Field(None, max_length=100)
-    NgaySinhCha: Optional[date] = None
-    HoTenMe: Optional[str] = Field(None, max_length=100)
-    NgaySinhMe: Optional[date] = None
-    HoTenVoChong: Optional[str] = Field(None, max_length=100)
-    NgaySinhVoChong: Optional[date] = None
+    Id: Optional[uuid.UUID]
+    HoVaTen: Optional[str] 
+    GioiTinh: Optional[int] 
+    SinhNgay: Optional[date] 
+    NoiSinh: Optional[str] 
+    SoCCCD: Optional[str] 
+    NgayCapCCCD: Optional[date] 
+    DanToc: Optional[str] 
+    TonGiao: Optional[str] 
+    SoDienThoai: Optional[str] 
+    DiaChiDangKyThuongTru: Optional[str] 
+    DiaChiDangKyTamTru: Optional[str] 
+    NgheNghiep: Optional[str] 
+    CoQuan: Optional[str] 
+    HoTenCha: Optional[str] 
+    NgaySinhCha: Optional[date] 
+    HoTenMe: Optional[str] 
+    NgaySinhMe: Optional[date] 
+    HoTenVoChong: Optional[str]
+    NgaySinhVoChong: Optional[date] 
 
 
 def get_passport_data(cccd):
-    with Session() as session:
-        passport = session.query(ResidentData).filter_by(SoCCCD=cccd).first()
+    Session = get_user_session()
+    with Session() as session_db:
+        passport = session_db.query(ResidentData).filter_by(SoCCCD=cccd).first()
         if passport:
             return ResidentDataModel.model_validate(passport)
         else:

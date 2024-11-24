@@ -11,7 +11,7 @@ def auth_middleware(f):
     @wraps(f)
     def __auth_middleware(*args, **kwargs):# -> tuple[Response, Literal[403]] | Any:# -> tuple[Response, Literal[403]] | Any:
         try:
-            get_session(session['user'], session['password'])
+            get_session(session['cccd'], session['password'])
             return f(*args, **kwargs)
         except Exception as e:
             return jsonify({

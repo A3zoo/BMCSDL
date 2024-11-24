@@ -64,6 +64,36 @@
   </head>
 
   <body>
+    <table border="1">
+      <thead>
+          <tr>
+              <th>ID</th>
+              <th>Họ và Tên</th>
+              <th>Giới Tính</th>
+              <th>Ngày Sinh</th>
+              <th>Nơi Sinh</th>
+              <th>Số CCCD</th>
+              <th>Ngày Cấp CCCD</th>
+              <th>Địa Chỉ</th>
+              <th>Trạng Thái</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for passport in listpassportdata %}
+              <tr>
+                  <td>{{ passport.Id }}</td>
+                  <td>{{ passport.HoVaTen }}</td>
+                  <td>{{ passport.GioiTinh }}</td>
+                  <td>{{ passport.SinhNgay }}</td>
+                  <td>{{ passport.NoiSinh }}</td>
+                  <td>{{ passport.SoCCCD }}</td>
+                  <td>{{ passport.NgayCapCCCD }}</td>
+                  <td>{{ passport.DiaChiDangKyThuongTru }}</td>
+                  <td>{{ passport.TrangThai }}</td>
+              </tr>
+          {% endfor %}
+      </tbody>
+  </table>
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">

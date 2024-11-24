@@ -18,5 +18,7 @@ def get_session(username, password, host = 'localhost', port = '1521', service= 
     # Tạo một session
     Session = sessionmaker(bind=engine)
     return Session
+
+def get_user_session():
+    return get_session(session['cccd'], session['password'])
 mgr_Session = get_session('SEC_MGR', 'quangduy')
-user_Session = get_session(session['cccd'], session['password'])
