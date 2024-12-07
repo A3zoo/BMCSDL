@@ -43,27 +43,56 @@
     />
 
     <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href={{url_for("static", filename="assets/vendor/fonts/boxicons.css")}}" />
+    <link rel="stylesheet" href="{{url_for("static", filename="assets/vendor/fonts/boxicons.css")}}" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href={{url_for("static", filename="assets/vendor/css/core.css")}}" class="template-customizer-core-css" />
-    <link rel="stylesheet" href={{url_for("static", filename="assets/vendor/css/theme-default.css")}}" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href={{url_for("static", filename="assets/css/demo.css")}}" />
+    <link rel="stylesheet" href="{{url_for("static", filename="assets/vendor/css/core.css")}}" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="{{url_for("static", filename="assets/vendor/css/theme-default.css")}}" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{{url_for("static", filename="assets/css/demo.css")}}" />
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href={{url_for("static", filename="assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css")}}" />
+    <link rel="stylesheet" href="{{url_for("static", filename="assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css")}}" />
 
     <!-- Page CSS -->
 
     <!-- Helpers -->
-    <script src={{url_for("static", filename="assets/vendor/js/helpers.js"></script>
-
+    <script src="{{url_for("static", filename="assets/vendor/js/helpers.js")}}"></script>
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src={{url_for("static", filename="assets/js/config.js"></script>
+    <script src="{{url_for("static", filename="assets/js/config.js")}}"></script>
   </head>
 
   <body>
+    <table border="1">
+      <thead>
+          <tr>
+              <th>ID</th>
+              <th>Họ và Tên</th>
+              <th>Giới Tính</th>
+              <th>Ngày Sinh</th>
+              <th>Nơi Sinh</th>
+              <th>Số CCCD</th>
+              <th>Ngày Cấp CCCD</th>
+              <th>Địa Chỉ</th>
+              <th>Trạng Thái</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for passport in listpassportdata %}
+              <tr>
+                  <td>{{ passport.Id }}</td>
+                  <td>{{ passport.HoVaTen }}</td>
+                  <td>{{ passport.GioiTinh }}</td>
+                  <td>{{ passport.SinhNgay }}</td>
+                  <td>{{ passport.NoiSinh }}</td>
+                  <td>{{ passport.SoCCCD }}</td>
+                  <td>{{ passport.NgayCapCCCD }}</td>
+                  <td>{{ passport.DiaChiDangKyThuongTru }}</td>
+                  <td>{{ passport.TrangThai }}</td>
+              </tr>
+          {% endfor %}
+      </tbody>
+  </table>
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
@@ -374,18 +403,19 @@
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
-    <script src={{url_for("static", filename="assets/vendor/libs/jquery/jquery.js"></script>
-    <script src={{url_for("static", filename="assets/vendor/libs/popper/popper.js"></script>
-    <script src={{url_for("static", filename="assets/vendor/js/bootstrap.js"></script>
-    <script src={{url_for("static", filename="assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="{{url_for("static", filename="assets/vendor/libs/jquery/jquery.js")}}"></script>
+    <script src="{{url_for("static", filename="assets/vendor/libs/popper/popper.js")}}"></script>
+    <script src="{{url_for("static", filename="assets/vendor/js/bootstrap.js")}}"></script>
+    <script src="{{url_for("static", filename="assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js")}}"></script>
 
-    <script src={{url_for("static", filename="assets/vendor/js/menu.js"></script>
+    <script src="{{url_for("static", filename="assets/vendor/js/menu.js")}}"></script>
     <!-- endbuild -->
 
     <!-- Vendors JS -->
 
     <!-- Main JS -->
-    <script src={{url_for("static", filename="assets/js/main.js"></script>
+    <script src="{{url_for("static", filename="assets/js/main.js")}}"></script>
+    
     <script>
       function confirmAction() {
           const result = confirm("Bạn chưa xem chi tiết. Bạn có chắc chắn muốn từ chối?");
@@ -402,6 +432,6 @@
     <!-- Page JS -->
 
     <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script async defer src="https://buttons.github.io/buttons.js")}}"></script>
   </body>
 </html>

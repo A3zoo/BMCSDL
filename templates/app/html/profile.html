@@ -43,25 +43,37 @@
     />
 
     <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="{{url_for("static", filename="assets/vendor/fonts/boxicons.css")}}" />
+    <link rel="stylesheet" href="../assets/vendor/fonts/boxicons.css" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="{{url_for("static", filename="assets/vendor/css/core.css")}}" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="{{url_for("static", filename="assets/vendor/css/theme-default.css")}}" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="{{url_for("static", filename="assets/css/demo.css")}}" />
+    <link rel="stylesheet" href="../assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="../assets/css/demo.css" />
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="{{url_for("static", filename="assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css")}}" />
+    <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+
     <!-- Page CSS -->
 
     <!-- Helpers -->
-    <script src="{{url_for("static", filename="assets/vendor/js/helpers.js")}}"></script>
+    <script src="../assets/vendor/js/helpers.js"></script>
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="{{url_for("static", filename="assets/js/config.js")}}"></script>
+    <script src="../assets/js/config.js"></script>
   </head>
 
   <body>
+    <tr>
+      <td>{{ passport.Id }}</td>
+      <td>{{ passport.HoVaTen }}</td>
+      <td>{{ passport.GioiTinh }}</td>
+      <td>{{ passport.SinhNgay }}</td>
+      <td>{{ passport.NoiSinh }}</td>
+      <td>{{ passport.SoCCCD }}</td>
+      <td>{{ passport.NgayCapCCCD }}</td>
+      <td>{{ passport.DiaChiDangKyThuongTru }}</td>
+      <td>{{ passport.TrangThai }}</td>
+  </tr>
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
@@ -136,10 +148,28 @@
           <div class="menu-inner-shadow"></div>
 
           <ul class="menu-inner py-1">
-            <li class="menu-item active">
-              <a href="danh_sach_yeu_cau_cho_xac_thuc_mh4.html" class="menu-link">
+            <li class="menu-item active open">
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                <div data-i18n="Account Settings">Cài đặt tài khoản</div>
+              </a>
+              <ul class="menu-sub">
+                <li class="menu-item active">
+                  <a href="nguoi_dang_ky_mh2.html" class="menu-link">
+                    <div data-i18n="Account">Tài khoản</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="pages-account-settings-notifications.html" class="menu-link">
+                    <div data-i18n="Notifications">Thông báo</div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="menu-item">
+              <a href="trang_thai_phe_duyet_mh3.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-table"></i>
-                <div data-i18n="Tables">Danh sách yêu cầu</div>
+                <div data-i18n="Tables">Tình trạng hồ sơ</div>
               </a>
             </li>
             <!-- Misc -->
@@ -192,7 +222,7 @@
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                      <img src="{{url_for("static", filename="assets/img/avatars/1.png")}}" alt class="w-px-40 h-auto rounded-circle" />
+                      <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
                     </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
@@ -201,7 +231,7 @@
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar avatar-online">
-                              <img src="{{url_for("static", filename="assets/img/avatars/1.png")}}" alt class="w-px-40 h-auto rounded-circle" />
+                              <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
                             </div>
                           </div>
                           <div class="flex-grow-1">
@@ -249,14 +279,22 @@
             <!-- Content -->
 
             <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Cài đặt tài khoản /</span> Chi tiết hồ sơ</h4>
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Cài đặt tài khoản /</span> Tài khoản</h4>
 
               <div class="row">
                 <div class="col-md-12">
                   <ul class="nav nav-pills flex-column flex-md-row mb-3">
+                    <li class="nav-item">
+                      <a class="nav-link active" href="javascript:void(0);"><i class="bx bx-user me-1"></i> Tài khoản</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="pages-account-settings-notifications.html"
+                        ><i class="bx bx-bell me-1"></i> Thông báo</a
+                      >
+                    </li>
                   </ul>
                   <div class="card mb-4">
-                    <h4 class="card-header">Dữ liệu mới đăng ký</h4>
+                    <h4 class="card-header">Chi tiết hồ sơ</h4>
                     <!-- Account -->
                     <div class="card-body">
                       <form id="formAccountSettings" method="POST" onsubmit="return false">
@@ -269,7 +307,6 @@
                               id="hoten"
                               name="hoten"
                               placeholder="Nhập đầy đủ họ và tên"
-                              readonly
                             />
                           </div>
                           <div class="mb-3 col-md-6">
@@ -283,7 +320,6 @@
                                   value=""
                                   id="nam"
                                   checked
-                                  disabled
                                 />
                                 <label class="form-check-label" for="defaultRadio1">Nam</label>
                               </div>
@@ -294,7 +330,6 @@
                                   type="radio"
                                   value=""
                                   id="nu"
-                                  disabled
                                 />
                                 <label class="form-check-label" for="defaultRadio2">Nữ</label>
                               </div>
@@ -302,11 +337,11 @@
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="ngay_cap" class="form-label">3. Sinh ngày</label>
-                            <input class="form-control" type="date" value="2021-06-18" id="html5-date-input" readonly/>
+                            <input class="form-control" type="date" value="2021-06-18" id="html5-date-input" />
                           </div>
                           <div class="mb-3 col-md-6">
                             <label class="form-label" for="country">Nơi sinh (theo giấy khai sinh)</label>
-                            <select id="country" class="select2 form-select" disabled="true">
+                            <select id="country" class="select2 form-select">
                               <option value="">Chọn nơi sinh</option>
                               <option value="0">An Giang</option>
                               <option value="1">Bà Rịa-Vũng Tàu</option>
@@ -381,16 +416,15 @@
                               id="organization"
                               name="cccd"
                               placeholder="Nhập số CCCD"
-                              readonly
                             />
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="ngay_cap" class="form-label">Ngày cấp</label>
-                            <input class="form-control" type="date" value="2021-06-18" id="html5-date-input" readonly/>
+                            <input class="form-control" type="date" value="2021-06-18" id="html5-date-input" />
                           </div>
                           <div class="mb-3 col-md-3">
                             <label class="form-label" for="country">5. Dân tộc</label>
-                            <select id="country" class="select2 form-select" disabled="true">
+                            <select id="country" class="select2 form-select">
                               <option value="">Chọn dân tộc</option>
                               <option value="01">Kinh (Việt)</option>
                               <option value="02">Tày</option>
@@ -451,7 +485,7 @@
                           </div>
                           <div class="mb-3 col-md-3">
                             <label class="form-label" for="country">6. Tôn giáo</label>
-                            <select id="country" class="select2 form-select" disabled="true">
+                            <select id="country" class="select2 form-select">
                               <option value="">Chọn tôn giáo</option>
                               <option value="0">Không có</option>
                               <option value="1">Phật giáo</option>
@@ -466,79 +500,78 @@
                           <div class="mb-3 col-md-6">
                             <label class="form-label" for="phoneNumber">7. Số điện thoại</label>
                             <div class="input-group input-group-merge">
-                              <span readonly class="input-group-text">VN (+84)</span>
+                              <span class="input-group-text">VN (+84)</span>
                               <input
                                 type="text"
                                 id="phoneNumber"
                                 name="phoneNumber"
                                 class="form-control"
                                 placeholder="202 555 0111"
-                                readonly
                               />
                             </div>
                           </div>
                           <div class="mb-3 col-md-4">
                             <label for="address" class="form-label">8. Địa chỉ đăng ký thường trú</label>
-                            <select class="select2 form-select" id='provinces' onchange='getProvinces(event)' disabled="true">
+                            <select class="select2 form-select" id='provinces' onchange='getProvinces(event)'>
                               <option value=''>Chọn tỉnh thành</option>
                             </select>                  
                           </div>
                           <div class="mb-3 col-md-4">
                             <label for="address" class="form-label">Quận/huyện</label>
-                            <select class="select2 form-select" id='districts' onchange='getDistricts(event)' disabled="true">
+                            <select class="select2 form-select" id='districts' onchange='getDistricts(event)'>
                               <option value=''>Chọn quận/huyện</option>
                             </select>               
                           </div>
                           <div class="mb-3 col-md-4">
                             <label for="address" class="form-label">Địa chỉ</label>
-                            <input class="form-control" type="text" id="wards" name="wards" placeholder="Nhập số nhà, tên đường, tổ, khu phố, phường" readonly/>
+                            <input class="form-control" type="text" id="wards" name="wards" placeholder="Nhập số nhà, tên đường, tổ, khu phố, phường" />
                           </div>
 
                           <div class="mb-3 col-md-12">
                             <label for="address" class="form-label">9. Địa chỉ đăng ký tạm trú</label>    
-                            <input class="form-control" type="text" id="diachi" placeholder="Nhập địa chỉ tạm trú" readonly/>
+                            <input class="form-control" type="text" id="diachi" placeholder="Nhập địa chỉ tạm trú" />
                           </div>
 
                           <div class="mb-3 col-md-6">
                             <label for="state" class="form-label">10. Nghề nghiệp</label>
-                            <input class="form-control" type="text" id="nghe"  placeholder="Nhập nghề nghiệp" readonly/>
+                            <input class="form-control" type="text" id="nghe"  placeholder="Nhập nghề nghiệp" />
                           </div>
 
                           <div class="mb-3 col-md-6">
                             <label for="zipCode" class="form-label">11. Tên và địa chỉ cơ quan</label>
-                            <input class="form-control" type="text" id="ten_co_quan"  placeholder="Nhập tên cơ quan - Địa chỉ" readonly/>
+                            <input class="form-control" type="text" id="ten_co_quan"  placeholder="Nhập tên cơ quan - Địa chỉ" />
                           </div>
 
                           <div class="mb-3 col-md-6">
                             <label for="state" class="form-label">12. Họ tên cha</label>
-                            <input class="form-control" type="text" id="ho_ten_cha"  placeholder="Nhập họ tên cha" readonly/>
+                            <input class="form-control" type="text" id="ho_ten_cha"  placeholder="Nhập họ tên cha" />
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="ngay_cap" class="form-label">Ngày sinh</label>
-                            <input class="form-control" type="date" value="2000-01-01" id="html5-date-input" readonly/>
+                            <input class="form-control" type="date" value="2000-01-01" id="html5-date-input" />
                           </div>
 
                           <div class="mb-3 col-md-6">
                             <label for="zipCode" class="form-label">13. Họ tên mẹ</label>
-                            <input class="form-control" type="text" id="ho_ten_me"  placeholder="Nhập họ tên mẹ" readonly/>
+                            <input class="form-control" type="text" id="ho_ten_me"  placeholder="Nhập họ tên mẹ" />
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="ngay_cap" class="form-label">Ngày sinh</label>
-                            <input class="form-control" type="date" value="2000-01-01" id="html5-date-input" readonly/>
+                            <input class="form-control" type="date" value="2000-01-01" id="html5-date-input" />
                           </div>
                           <!-- / Họ tên vợ chồng -->
                           <div class="mb-3 col-md-6">
                             <label for="zipCode" class="form-label">Họ tên Vợ/Chồng</label>
-                            <input class="form-control" type="text" id="ho_ten_vo_chong"  placeholder="Nhập họ tên vợ/chồng" readonly/>
+                            <input class="form-control" type="text" id="ho_ten_vo_chong"  placeholder="Nhập họ tên vợ/chồng" />
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="ngay_cap" class="form-label">Ngày sinh</label>
-                            <input class="form-control" type="date" value="2000-01-01" id="html5-date-input" readonly/>
+                            <input class="form-control" type="date" value="2000-01-01" id="html5-date-input" />
                           </div>
 
                           <div class="mb-3 col-md-12">
                             <label class="form-label" for="country">14. Cơ quan tiếp nhận</label>
-                            <select id="country" class="select2 form-select" disabled="true">
+                            <select id="country" class="select2 form-select">
                               <option value="">Chọn nơi tiếp nhận</option>
                               <option value="0">Cục Quản lý XNC tại TP Hồ Chí Minh</option>
                               <option value="1">Cục Quản lý XNC tại Hà Nội</option>
@@ -614,6 +647,10 @@
                               <option value="71">Phòng Quản lý XNC - Công an tỉnh Yên Bái</option>
                             </select>
                           </div>
+                        <div class="mt-2">
+                          <button type="submit" class="btn btn-primary me-2">Xác nhận</button>
+                          <button type="reset" class="btn btn-outline-secondary">Hủy</button>
+                        </div>
                       </form>
                     </div>
                     <!-- /Account -->
@@ -622,13 +659,7 @@
               </div>
             </div>
             <!-- / Content -->
-            <div class="mt-2">
-              <button type="submit" class="btn btn-primary me-2">Phê duyệt</button>
-              <button type="button" class="btn btn-danger me-2">Từ chối</button>
-              <a href = "danh_sach_yeu_cau_cho_phe_duyet_mh7.html">
-                <button type="reset" class="btn btn-outline-secondary">Quay lại</button>
-              </a>
-            </div>
+
             <!-- Footer -->
             <footer class="content-footer footer bg-footer-theme">
               <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
@@ -676,18 +707,18 @@
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
-    <script src="{{url_for("static", filename="assets/vendor/libs/jquery/jquery.js")}}"></script>
-    <script src="{{url_for("static", filename="assets/vendor/libs/popper/popper.js")}}"></script>
-    <script src="{{url_for("static", filename="assets/vendor/js/bootstrap.js")}}"></script>
-    <script src="{{url_for("static", filename="assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js")}}"></script>
+    <script src="../assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="../assets/vendor/libs/popper/popper.js"></script>
+    <script src="../assets/vendor/js/bootstrap.js"></script>
+    <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
-    <script src="{{url_for("static", filename="assets/vendor/js/menu.js")}}"></script>
+    <script src="../assets/vendor/js/menu.js"></script>
     <!-- endbuild -->
 
     <!-- Vendors JS -->
 
     <!-- Main JS -->
-    <script src="{{url_for("static", filename="assets/js/main.js")}}"></script>
+    <script src="../assets/js/main.js"></script>
 
     <!-- Page JS -->
     <script src="../assets/js/pages-account-settings-account.js"></script>
@@ -743,6 +774,6 @@
     }
       </script>
     <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js")}}"></script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
   </body>
 </html>
