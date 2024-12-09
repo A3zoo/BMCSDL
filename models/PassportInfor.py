@@ -9,7 +9,7 @@ from sqlalchemy.inspection import inspect
 from database import get_user_session
 
 class PassportData(Base):
-    __tablename__ = 'PASSPORTREGISTION'
+    __tablename__ = 'PASSPORTDATA'
     __table_args__ = (
        {'extend_existing': True, 'quote': False, 'schema': 'SEC_MGR'}
     )

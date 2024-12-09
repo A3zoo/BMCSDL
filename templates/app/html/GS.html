@@ -32,7 +32,7 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href={{url_for("static", filename="assets/img/favicon/favicon.ico")}}" />
+    <link rel="icon" type="image/x-icon" href={{url_for("static", filename="assets/img/favicon/favicon.ico")}}"/>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -63,37 +63,6 @@
   </head>
 
   <body>
-    <table border="1">
-      <thead>
-          <tr>
-              <th>ID</th>
-              <th>Họ và Tên</th>
-              <th>Giới Tính</th>
-              <th>Ngày Sinh</th>
-              <th>Nơi Sinh</th>
-              <th>Số CCCD</th>
-              <th>Ngày Cấp CCCD</th>
-              <th>Địa Chỉ</th>
-              <th>Trạng Thái</th>
-          </tr>
-      </thead>
-      <tbody>
-          {% for passport in listpassportdata %}
-              <tr>
-                  <td>{{ passport.Id }}</td>
-                  <td>{{ passport.HoVaTen }}</td>
-                  <td>{{ passport.GioiTinh }}</td>
-                  <td>{{ passport.SinhNgay }}</td>
-                  <td>{{ passport.NoiSinh }}</td>
-                  <td>{{ passport.SoCCCD }}</td>
-                  <td>{{ passport.NgayCapCCCD }}</td>
-                  <td>{{ passport.DiaChiDangKyThuongTru }}</td>
-                  <td href="/updatestatus?cccd={passport.SoCCCD};">{{ passport.TrangThai }}</td>
-                
-              </tr>
-          {% endfor %}
-      </tbody>
-  </table>
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
@@ -225,7 +194,7 @@
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                      <img src={{url_for("static", filename="assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle")}}" />
+                      <img src={{url_for("static", filename="assets/img/avatars/1.png")}}" alt class="w-px-40 h-auto rounded-circle" />
                     </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
@@ -234,7 +203,7 @@
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar avatar-online">
-                              <img src={{url_for("static", filename="assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle")}}" />
+                              <img src={{url_for("static", filename="assets/img/avatars/1.png")}}" alt class="w-px-40 h-auto rounded-circle" />
                             </div>
                           </div>
                           <div class="flex-grow-1">
@@ -290,10 +259,10 @@
                   <table class="table">
                     <thead>
                       <tr>
-                        <th>Họ tên</th>
-                        <th>Giới tính</th>
-                        <th>Ngày sinh</th>
-                        <th>CCCD</th>
+                        <th>Thời gian</th>
+                        <th>Nhân viên</th>
+                        <th>Chức vụ</th>
+                        <th>Nội dung</th>
                         <th>SDT</th>
                         <th></th>
                       </tr>
@@ -419,16 +388,16 @@
     
     <script>
       function confirmAction() {
-          const result = confirm("Bạn chưa xem chi tiết. Bạn có chắc chắn muốn từ chối?");
-          // if (result) {
-          //     // Người dùng chọn "Yes" (OK)
-          //     alert("Bạn đã từ chối thành công");
-          // } else {
-          //     // Người dùng chọn "No" (Cancel)
-          //     alert("Thao tác từ chối đã bị hủy");
-          // }
+        const result = confirm("Bạn chưa xem chi tiết. Bạn có chắc chắn muốn từ chối?");
+        // if (result) {
+        //     // Người dùng chọn "Yes" (OK)
+        //     alert("Bạn đã từ chối thành công");
+        // } else {
+        //     // Người dùng chọn "No" (Cancel)
+        //     alert("Thao tác từ chối đã bị hủy");
+        // }
       }
-      </script>
+    </script>
 
     <!-- Page JS -->
 

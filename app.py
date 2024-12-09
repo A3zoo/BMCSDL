@@ -10,13 +10,10 @@ app = Flask(__name__)
 
 app.secret_key = "ENTER_YOUR_SECRET_KEY"
 
-@app.route('/')
-def index():
-    return render_template('index.html')
 
-@app.route('/login')
+@app.route('/')
 def login():
-    return render_template('login.html')
+    return render_template('app/html/chi_tiet_yeu_cau_mh5.html')
 
 app.register_blueprint(auth_views, url_prefix='/auth')
 app.register_blueprint(passportCT, url_prefix='/passport')

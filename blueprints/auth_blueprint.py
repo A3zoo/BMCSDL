@@ -2,7 +2,7 @@ from flask import Blueprint, request, render_template, redirect, flash
 from flask import session, redirect, url_for, request
 from models.UserAccount import get_account_by_cccd_pw
 from models.PassportInfor import get_all_passport_data, get_passport_data
-
+from models.Audit import get_audit_trails_for_passport
 auth_views = Blueprint("auth", __name__)
 
 @auth_views.route("/login", strict_slashes=False, methods=["GET", "POST"])
@@ -16,7 +16,6 @@ def login():
         if not result:
             flash("Invalid Login Credentials!", "error")
             return redirect("/login")
-
         session['cccd'] = cccd
         session['password'] = user_password
         session['vt'] = result.UserType
@@ -31,8 +30,8 @@ def login():
             data = get_all_passport_data()
             return render_template("app/html/danh_sach_ket_qua_phe_duyet_mh10.html", listpassportdata =  data)
         elif session['vt'] == 'GS':
-            data = get_all_passport_data()
-            return render_template("app/html/danh_sach_ket_qua_phe_duyet_mh10.html", listpassportdata =  data)
+            data = get_audit_trails_for_passport()
+            return render_template('app/html/GS.html', audit_trails = data)
         return render_template("profile.html", duy =  result)
     return render_template("login.html")
 
