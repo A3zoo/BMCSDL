@@ -252,70 +252,53 @@
 
             <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Danh sách yêu cầu chờ xác thực</span> </h4>
-
+              <div class="mb-3">
+                <div class="row">
+                  <div class="col-md-2">
+                    <label for="roleFilter" class="form-label">Filter by Role:</label>
+                    <select id="roleFilter" class="form-select">
+                      <option value="">-- All Roles --</option>
+                      <option value="XT">Xác thực</option>
+                      <option value="XD">Xét duyệt</option>
+                      <option value="LT">Lưu trữ</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              
               <!-- Basic Bootstrap Table -->
               <div class="card">
                 <div class="table-responsive text-nowrap">
                   <table class="table">
                     <thead>
                       <tr>
-                        <th>Thời gian</th>
-                        <th>Nhân viên</th>
-                        <th>Chức vụ</th>
-                        <th>Nội dung</th>
-                        <th>SDT</th>
-                        <th></th>
-                      </tr>
+                        <th>Audit ID</th>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Operation</th>
+                        <th>Old Data</th>
+                        <th>New Data</th>
+                        <th>Change Date</th>
+                        <th>Description</th>
+                    </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                      <tr>
-                        <td> Nguyễn Văn A</td>
-                        <td> Nam</td>
-                        <td> 11/1/1999</td>
-                        <td>609484332423</td>
-                        <td>
-                          09341358421
-                        </td>
-                        <td>
-                          <a href = "chi_tiet_yeu_cau_mh5.html">
-                            <button type="button" class="btn btn-outline-primary me-2">Chi tiết</button>
-                          </a>
-                          <button type="button" class="btn btn-primary me-2">Gửi yêu cầu</button>
-                          <button type="button" class="btn btn-danger" onclick="confirmAction()">Từ chối</button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td> Nguyễn Văn A</td>
-                        <td> Nam</td>
-                        <td> 11/1/1999</td>
-                        <td>609484332423</td>
-                        <td>
-                          09341358421
-                        </td>
-                        <td>
-                          <a href = "chi_tiet_yeu_cau_mh5.html">
-                            <button type="button" class="btn btn-outline-primary me-2">Chi tiết</button>
-                          </a>
-                          <button type="button" class="btn btn-primary me-2">Gửi yêu cầu</button>
-                          <button type="button" class="btn btn-danger" onclick="confirmAction()">Từ chối</button>
-                        </td>  
-                      </tr>
-                      <tr>
-                        <td> Nguyễn Văn A</td>
-                        <td> Nam</td>
-                        <td> 11/1/1999</td>
-                        <td>609484332423</td>
-                        <td>
-                          09341358421
-                        </td>
-                        <td>
-                          <a href = "chi_tiet_yeu_cau_mh5.html">
-                            <button type="button" class="btn btn-outline-primary me-2">Chi tiết</button>
-                          </a>
-                          <button type="button" class="btn btn-primary me-2">Gửi yêu cầu</button>
-                          <button type="button" class="btn btn-danger" onclick="confirmAction()">Từ chối</button>
-                        </td>
-                      </tr>
+                      {% for audit in audit_trails %}
+          <tr>
+              <td>{{ audit.audit_id }}</td>
+              <td>{{ audit.username }}</td>
+              <td>{{ audit.role }}</td>
+              <td>{{ audit.operation }}</td>
+              <td>{{ audit.old_data }}</td>
+              <td>{{ audit.new_data }}</td>
+              <td>{{ audit.change_date }}</td>
+              <td>{{ audit.description }}</td>
+          </tr>
+          {% else %}
+          <tr>
+              <td colspan="8">No audit logs available</td>
+          </tr>
+          {% endfor %}
                     </tbody>
                   </table>
                 </div>
@@ -398,6 +381,25 @@
         // }
       }
     </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const roleFilter = document.getElementById("roleFilter");
+        const tableRows = document.querySelectorAll("tbody tr");
+    
+        roleFilter.addEventListener("change", function () {
+          const selectedRole = this.value;
+    
+          tableRows.forEach(row => {
+            const roleCell = row.querySelector("td:nth-child(3)"); // Cột Role
+            if (!selectedRole || roleCell.textContent.trim() === selectedRole) {
+              row.style.display = ""; // Hiển thị dòng
+            } else {
+              row.style.display = "none"; // Ẩn dòng
+            }
+          });
+        });
+      });
+    </script>    
 
     <!-- Page JS -->
 

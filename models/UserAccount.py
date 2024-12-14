@@ -11,8 +11,7 @@ from typing import Optional
 
 class UserAccount(Base):
     __tablename__: str = 'UserAccount'
-    __table_args__ = {'extend_existing': True, 'quote': False}
-    
+
     Email: Mapped[str] = mapped_column(String(25), nullable=True, name='EMAIL')
     Cccd: Mapped[str] = mapped_column(String(20), primary_key=True, name='CCCD')
     Sdt: Mapped[str] = mapped_column(String(25), nullable=True, name='SDT')

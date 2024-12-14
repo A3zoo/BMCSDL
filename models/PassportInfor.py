@@ -10,10 +10,6 @@ from database import get_user_session
 
 class PassportData(Base):
     __tablename__ = 'PASSPORTDATA'
-    __table_args__ = (
-       {'extend_existing': True, 'quote': False, 'schema': 'SEC_MGR'}
-    )
-
     Id: Mapped[uuid.UUID] =  mapped_column(
         LargeBinary(16),  # Sử dụng LargeBinary(16) để tương ứng với RAW(16) trong Oracle
         primary_key=True, 

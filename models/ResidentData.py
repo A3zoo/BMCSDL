@@ -9,10 +9,6 @@ from database import get_user_session
 
 class ResidentData(Base):
     __tablename__ = 'RESIDENTDATA'
-    __table_args__ = (
-        {'extend_existing': True, 'quote': False, 'schema': 'SEC_MGR'}
-    )
-
     Id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, name='ID'
     )

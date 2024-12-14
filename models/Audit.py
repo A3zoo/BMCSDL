@@ -1,40 +1,42 @@
-from sqlalchemy import Column, String, DateTime, Text, create_engine, Integer
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-from pydantic import BaseModel, Field, ConfigDict
-from typing import Optional
 from datetime import datetime
+from typing import Optional
+from sqlalchemy import Column, Integer, String, TIMESTAMP
+from sqlalchemy.ext.declarative import declarative_base
+from pydantic import BaseModel, ConfigDict
 from .base import Base
 from database import get_user_session
+class PassportAuditLog(Base):
+    __tablename__ = 'PASSPORT_AUDIT_LOG'
 
-class AuditTrail(Base):
-    __tablename__ = 'DBA_AUDIT_TRAIL' 
-    entry_id = Column('ENTRYID', Integer, primary_key=True)
-    username = Column('username', String, nullable=False)  # DBUSERNAME -> username
-    action_name = Column('action_name',String, nullable=False)            
-    obj_name = Column('obj_name', String, nullable=False) # OBJECT_NAME -> obj_name
-    timestamp = Column('timestamp', DateTime, primary_key=True)  # EVENT_TIMESTAMP -> timestamp
-
-class AuditTrailModel(BaseModel):
+    audit_id = Column('audit_id', Integer, primary_key=True, autoincrement=True)
+    username = Column('username', String(50), nullable=False)
+    role = Column('role', String(10), nullable=True)
+    operation = Column('operation', String(10), nullable=False)
+    old_data = Column('old_data', String(50), nullable=True)
+    new_data = Column('new_data', String(50), nullable=True)
+    change_date = Column('change_date', TIMESTAMP, nullable=False)
+    description = Column('description', String(1000), nullable=True)
+    
+class PassportAuditLogModel(BaseModel):
     model_config = ConfigDict(from_attributes=True)
+    audit_id: Optional[int]
     username: Optional[str]
-    action_name: Optional[str]
-    obj_name: Optional[str]
-    timestamp: Optional[datetime]
-    entry_id: Optional[int]  # Changed from `String` to `str`
+    role: Optional[str]
+    operation: Optional[str]
+    old_data: Optional[str]
+    new_data: Optional[str]
+    change_date: Optional[datetime]
+    description: Optional[str]
 
 
-def get_audit_trails_for_passport():
-    Session = get_user_session() 
-    with Session() as session:
-        results = (session.query(AuditTrail)
-                          .filter_by(obj_name='PASSPORTDATA')
-                          .order_by(AuditTrail.timestamp.desc())
-                          .all())
-        audit_trails = [AuditTrailModel.model_validate(record) for record in results]
-        return audit_trails
-
-
-
-                                      
-
+def get_all_audit():
+    Session = get_user_session()  # Hàm này trả về một session kết nối tới database
+    with Session() as session_db:
+        # Truy vấn tất cả các bản ghi trong bảng PassportAuditLog
+        audits = session_db.query(PassportAuditLog).all()
+        
+        # Nếu có dữ liệu, chuyển đổi từng bản ghi thành PassportAuditLogModel
+        if audits:
+            return [PassportAuditLogModel.model_validate(audit) for audit in audits]
+        else:
+            return []
