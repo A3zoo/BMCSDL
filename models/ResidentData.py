@@ -16,7 +16,7 @@ class ResidentData(Base):
     GioiTinh: Mapped[int] = mapped_column(Integer, nullable=True, name='GIOITINH')
     SinhNgay: Mapped[Date] = mapped_column(Date, nullable=True, name='SINHNGAY')
     NoiSinh: Mapped[str] = mapped_column(String(100), nullable=True, name='NOISINH')
-    SoCCCD: Mapped[str] = mapped_column(String(20), ForeignKey('UserAccount(CCCD)', ondelete='CASCADE'), nullable=True, name='SOCCCD')
+    SoCCCD: Mapped[str] = mapped_column(String(20), ForeignKey('UserAccount.CCCD', ondelete='CASCADE'), nullable=True, name='SOCCCD')
     NgayCapCCCD: Mapped[Date] = mapped_column(Date, nullable=True, name='NGAYCAPCCCD')
     DanToc: Mapped[str] = mapped_column(String(50), nullable=True, name='DANTOC')
     TonGiao: Mapped[str] = mapped_column(String(50), nullable=True, name='TONGIAO')

@@ -6,7 +6,7 @@ from pydantic import BaseModel, Field, UUID4, ConfigDict
 from typing import Optional
 from datetime import date
 from sqlalchemy.inspection import inspect
-from database import get_user_session
+from database import get_user_session, get_session
 
 class PassportData(Base):
     __tablename__ = 'PASSPORTDATA'
@@ -20,7 +20,7 @@ class PassportData(Base):
     GioiTinh: Mapped[int] = mapped_column(Integer, nullable=True, name='GIOITINH')
     SinhNgay: Mapped[Date] = mapped_column(Date, nullable=True, name='SINHNGAY')
     NoiSinh: Mapped[str] = mapped_column(String(100), nullable=True, name='NOISINH')
-    SoCCCD: Mapped[str] = mapped_column(String(20), ForeignKey('UserAccount(CCCD)', ondelete='CASCADE'), nullable=True, name='SOCCCD')
+    SoCCCD: Mapped[str] = mapped_column(String(20), name='SOCCCD')
     NgayCapCCCD: Mapped[Date] = mapped_column(Date, nullable=True, name='NGAYCAPCCCD')
     DanToc: Mapped[str] = mapped_column(String(50), nullable=True, name='DANTOC')
     TonGiao: Mapped[str] = mapped_column(String(50), nullable=True, name='TONGIAO')
@@ -48,7 +48,7 @@ class PassportDataModel(BaseModel):
     GioiTinh: Optional[int] 
     SinhNgay: Optional[date] 
     NoiSinh: Optional[str] 
-    SoCCCD: Optional[str] 
+    SoCCCD: str
     NgayCapCCCD: Optional[date] 
     DanToc: Optional[str] 
     TonGiao: Optional[str] 
@@ -67,7 +67,7 @@ class PassportDataModel(BaseModel):
     CoGanChip: Optional[int]
     NoiTiepNhan: Optional[str]
     DiaChiNopHoSo: Optional[str] 
-    TrangThai: Optional[int] 
+    TrangThai: int
 
 def create_passport_data(payload: PassportDataModel):
     Session = get_user_session()
@@ -115,7 +115,7 @@ def get_passport_data(cccd):
 
 
 def update_status_passport_data_by_cccd(cccd, status):
-    Session = get_user_session()
+    Session = get_session('db_manager', 'quangduy')
     with Session() as session_db:
         passport = session_db.query(PassportData).filter_by(SoCCCD=cccd).first()
         if passport:
