@@ -28,7 +28,39 @@
     />
 
     <title>Account settings - Account | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
+    <style>
+      /* CSS for error message */
+      .error-message {
+          color: red;
+          font-size: 12px;
+          margin-top: 5px;
+      }
 
+      .input-field {
+          margin-bottom: 10px;
+      }
+
+      /* CSS for showing error messages */
+      input:invalid, input:required:invalid {
+          border: 1px solid red;
+      }
+
+      input:invalid + .error-message {
+          display: block;
+      }
+
+      input[type="date"]:invalid,
+      select:invalid {
+          border-color: red;
+      }
+      select:invalid {
+      border-color: red;
+      }
+
+      .error-message {
+          display: none;
+      }
+  </style>
     <meta name="description" content="" />
 
     <!-- Favicon -->
@@ -298,6 +330,7 @@
                               placeholder="Nhập đầy đủ họ và tên"
                               required minlength="2" maxlength="100"
                             />
+                            <div class="error-message">Họ và tên không hợp lệ. (2 - 100 ký tự)</div>
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="lastName" class="form-label">2. Giới tính</label>
@@ -328,7 +361,8 @@
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="ngay_sinh" class="form-label">3. Sinh ngày</label>
-                            <input class="form-control" type="ngaysinh" value="2021-06-18" id="html5-date-input" required/>
+                            <input class="form-control" type="date" id="ngaysinh" required/>
+                            <div id="error-ngaycap" class="error-message">Vui lòng chọn ngày sinh.</div>
                           </div>
                           <div class="mb-3 col-md-6">
                             <label class="form-label" for="country">Nơi sinh (theo giấy khai sinh)</label>
@@ -398,6 +432,7 @@
                               <option value="61">Vĩnh Phúc</option>
                               <option value="62">Yên Bái</option>
                             </select>
+                            <div id="error-noisinh" class="error-message">Vui lòng chọn nơi sinh.</div>
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="cccd" class="form-label">4. Số CCCD</label>
@@ -409,10 +444,12 @@
                               placeholder="Nhập số CCCD"
                               required pattern="^\d{12}$" title="CCCD phải có 12 chữ số"
                             />
+                            <div id="error-cccd" class="error-message">CCCD phải có 12 chữ số.</div>
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="ngay_cap" class="form-label">Ngày cấp</label>
-                            <input class="form-control" type="ngaycap" value="2021-06-18" id="html5-date-input" required/>
+                            <input class="form-control" type="date" id="ngaycap" required/>
+                            <div id="error-ngaycap" class="error-message">Vui lòng chọn ngày cấp.</div>
                           </div>
                           <div class="mb-3 col-md-3">
                             <label class="form-label" for="country">5. Dân tộc</label>
@@ -474,6 +511,7 @@
                               <option value="54">Ơ Đu</option>
                               <option value="55">Dân tộc khác</option>
                             </select>
+                            <div id="error-dantoc" class="error-message">Vui lòng chọn dân tộc.</div>
                           </div>
                           <div class="mb-3 col-md-3">
                             <label class="form-label" for="country">6. Tôn giáo</label>
@@ -488,6 +526,7 @@
                               <option value="6">Cao Đài</option>
                               <option value="7">Tôn giáo khác</option>
                             </select>
+                            <div id="error-tongiao" class="error-message">Vui lòng chọn tôn giáo.</div>
                           </div>
                           <div class="mb-3 col-md-6">
                             <label class="form-label" for="phoneNumber">7. Số điện thoại</label>
@@ -502,64 +541,77 @@
                                 required pattern="^\d{10}$" title="Số điện thoại phải có 10 chữ số"
                               />
                             </div>
+                            <div id="error-sdt" class="error-message">Số điện thoại phải có 10 chữ số.</div>
                           </div>
                           <div class="mb-3 col-md-4">
                             <label for="address" class="form-label">8. Địa chỉ đăng ký thường trú</label>
                             <select class="select2 form-select" id='tinh' onchange='getProvinces(event)' required>
                               <option value=''>Chọn tỉnh thành</option>
-                            </select>                  
+                            </select>  
+                            <div id="error-tinh" class="error-message">Vui lòng chọn tỉnh.</div>                
                           </div>
                           <div class="mb-3 col-md-4">
                             <label for="address" class="form-label">Quận/huyện</label>
                             <select class="select2 form-select" id='quan' onchange='getDistricts(event)' required>
                               <option value=''>Chọn quận/huyện</option>
-                            </select>               
+                            </select>  
+                            <div id="error-quan" class="error-message">Vui lòng chọn quận/huyện.</div>             
                           </div>
                           <div class="mb-3 col-md-4">
                             <label for="address" class="form-label">Địa chỉ</label>
                             <input class="form-control" type="text" id="diachinha" name="wards" placeholder="Nhập số nhà, tên đường, tổ, khu phố, phường" required/>
+                            <div id="error-diachinha" class="error-message">Vui lòng nhập địa chỉ nhà.</div>
                           </div>
 
                           <div class="mb-3 col-md-12">
                             <label for="address" class="form-label">9. Địa chỉ đăng ký tạm trú</label>    
                             <input class="form-control" type="text" id="diachi" placeholder="Nhập địa chỉ tạm trú" required/>
+                            <div id="error-diachi" class="error-message">Vui lòng nhập địa chỉ tạm trú.</div>
                           </div>
 
                           <div class="mb-3 col-md-6">
                             <label for="state" class="form-label">10. Nghề nghiệp</label>
                             <input class="form-control" type="text" id="nghe"  placeholder="Nhập nghề nghiệp" required/>
+                            <div id="error-nghe" class="error-message">Vui lòng nhập nghề nghiệp.</div>
                           </div>
 
                           <div class="mb-3 col-md-6">
                             <label for="zipCode" class="form-label">11. Tên và địa chỉ cơ quan</label>
                             <input class="form-control" type="text" id="ten_co_quan"  placeholder="Nhập tên cơ quan - Địa chỉ" required/>
+                            <div id="error-ten_co_quan" class="error-message">Vui lòng nhập tên và địa chỉ cơ quan.</div>
                           </div>
 
                           <div class="mb-3 col-md-6">
                             <label for="state" class="form-label">12. Họ tên cha</label>
                             <input class="form-control" type="text" id="ho_ten_cha"  placeholder="Nhập họ tên cha" required/>
+                            <div id="error-ho_ten_cha" class="error-message">Vui lòng nhập họ tên cha.</div>
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="ngay_cap" class="form-label">Ngày sinh</label>
-                            <input class="form-control" type="ngaysinhcha" value="2000-01-01" id="html5-date-input" required/>
+                            <input class="form-control" type="date" id="ngaysinhcha" required/>
+                            <div id="error-ngaysinhcha" class="error-message">Vui lòng chọn ngày sinh cha.</div>
                           </div>
 
                           <div class="mb-3 col-md-6">
                             <label for="zipCode" class="form-label">13. Họ tên mẹ</label>
                             <input class="form-control" type="text" id="ho_ten_me"  placeholder="Nhập họ tên mẹ" required/>
+                            <div id="error-ho_ten_me" class="error-message">Vui lòng nhập họ tên mẹ.</div>
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="ngay_cap" class="form-label">Ngày sinh</label>
-                            <input class="form-control" type="ngaysinhme" value="2000-01-01" id="html5-date-input" required/>
+                            <input class="form-control" type="date" id="ngaysinhme" required/>
+                            <div id="error-ngaysinhme" class="error-message">Vui lòng chọn ngày sinh mẹ.</div>
                           </div>
                           <!-- / Họ tên vợ chồng -->
                           <div class="mb-3 col-md-6">
                             <label for="zipCode" class="form-label">Họ tên Vợ/Chồng</label>
                             <input class="form-control" type="text" id="ho_ten_vo_chong"  placeholder="Nhập họ tên vợ/chồng" required/>
+                            <div id="error-ho_ten_vo_chong" class="error-message">Vui lòng nhập họ tên vợ/chồng.</div>
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="ngay_cap" class="form-label">Ngày sinh</label>
-                            <input class="form-control" type="ngaysinhvochong" value="2000-01-01" id="html5-date-input" required/>
+                            <input class="form-control" type="date" id="ngaysinhvochong" required/>
+                            <div id="error-ngaysinhvochong" class="error-message">Vui lòng chọn ngày sinh vợ/chồng.</div>
                           </div>
 
                           <div class="mb-3 col-md-12">
@@ -639,6 +691,7 @@
                               <option value="70">Phòng Quản lý XNC - Công an tỉnh Bà Rịa - Vũng Tàu</option>
                               <option value="71">Phòng Quản lý XNC - Công an tỉnh Yên Bái</option>
                             </select>
+                            <div id="error-coquan" class="error-message">Vui lòng nhập cơ quan tiếp nhận.</div>
                           </div>
                         <div class="mt-2">
                           <button type="submit" class="btn btn-primary me-2" id="submitBtn">Xác nhận</button>
@@ -721,7 +774,7 @@
         .then(response => response.json())
         .then(data => {
           let provinces = data.data.data;
-          provinces.map(value => document.getElementById('provinces').innerHTML += `<option value='${value.code}'>${value.name}</option>`);
+          provinces.map(value => document.getElementById('tinh').innerHTML += `<option value='${value.code}'>${value.name}</option>`);
         })
         .catch(error => {
           console.error('Lỗi khi gọi API:', error);
@@ -732,9 +785,9 @@
           .then(response => response.json())
           .then(data => {
             let districts = data.data.data;
-            document.getElementById('districts').innerHTML = `<option value=''>Chọn quận/huyện</option>`;
+            document.getElementById('quan').innerHTML = `<option value=''>Chọn quận/huyện</option>`;
             if (districts !== undefined) {
-              districts.map(value => document.getElementById('districts').innerHTML += `<option value='${value.code}'>${value.name}</option>`);
+              districts.map(value => document.getElementById('quan').innerHTML += `<option value='${value.code}'>${value.name}</option>`);
             }
           })
           .catch(error => {
@@ -747,9 +800,9 @@
           .then(response => response.json())
           .then(data => {
             let wards = data.data.data;
-            document.getElementById('wards').innerHTML = `<option value=''>-- select wards --</option>`;
+            document.getElementById('diachinha').innerHTML = `<option value=''>-- select wards --</option>`;
             if (wards !== undefined) {
-              wards.map(value => document.getElementById('wards').innerHTML += `<option value='${value.code}'>${value.name}</option>`);
+              wards.map(value => document.getElementById('diachinha').innerHTML += `<option value='${value.code}'>${value.name}</option>`);
             }
           })
           .catch(error => {
@@ -771,6 +824,12 @@
     <script>
       document.getElementById('passportForm').addEventListener('submit', function (event) {
         event.preventDefault();
+
+        // Kiểm tra tính hợp lệ của form
+        if (!validateForm(event)) {
+          return; // Nếu form không hợp lệ, dừng quá trình submit
+        }
+
         // Lấy dữ liệu từ các input và select
         const hoten = document.getElementById('hoten').value;
         const gioitinh = document.querySelector('input[name="gioitinh"]:checked');
@@ -781,13 +840,10 @@
         const dantoc = document.getElementById('dantoc').value;
         const tongiao = document.getElementById('tongiao').value;
         const sdt = document.getElementById('sdt').value;
-        //Địa chỉ đk thường trú 
         const tinh = document.getElementById('tinh').value;
         const quan = document.getElementById('quan').value;
         const diachinha = document.getElementById('diachinha').value;
-        //Địa chỉ đk tạm trú 
         const diachi = document.getElementById('diachi').value;
-
         const nghe = document.getElementById('nghe').value;
         const ten_co_quan = document.getElementById('ten_co_quan').value;
         const ho_ten_cha = document.getElementById('ho_ten_cha').value;
@@ -801,113 +857,17 @@
         let isValid = true;
         let errorMessage = '';
 
-        // Kiểm tra các trường đã có sẵn
-        if (!hoten || hoten.length < 2 || hoten.length > 100) {
-          isValid = false;
-          errorMessage += 'Họ và tên không hợp lệ. (2 - 100 ký tự)\n';
-        }
+        // Xóa thông báo lỗi cũ (nếu có)
+        const errorElements = document.querySelectorAll('.error-message');
+        errorElements.forEach(function (element) {
+          element.remove();
+        });
 
-        if (!gioitinh) {
-          isValid = false;
-          errorMessage += 'Vui lòng chọn giới tính.\n';
-        }
-
-        if (!noisinh) {
-          isValid = false;
-          errorMessage += 'Vui lòng nhập nơi sinh.\n';
-        }
-
-        if (!cccd || !/^\d{12}$/.test(cccd)) {
-          isValid = false;
-          errorMessage += 'CCCD phải có 12 chữ số.\n';
-        }
-
-        if (!ngaycap) {
-          isValid = false;
-          errorMessage += 'Vui lòng chọn ngày cấp.\n';
-        }
-
-        if (!dantoc) {
-          isValid = false;
-          errorMessage += 'Vui lòng nhập dân tộc.\n';
-        }
-
-        if (!tongiao) {
-          isValid = false;
-          errorMessage += 'Vui lòng nhập tôn giáo.\n';
-        }
-
-        if (!sdt || !/^\d{10}$/.test(sdt)) {
-          isValid = false;
-          errorMessage += 'Số điện thoại phải có 10 chữ số.\n';
-        }
-
-        if (!tinh || !quan) {
-          isValid = false;
-          errorMessage += 'Vui lòng chọn tỉnh và quận.\n';
-        }
-
-        if (!diachinha) {
-          isValid = false;
-          errorMessage += 'Vui lòng nhập địa chỉ nhà.\n';
-        }
-        //Địa chỉ đk tạm trú 
-        if (!diachi) {
-          isValid = false;
-          errorMessage += 'Vui lòng nhập địa tạm trú.\n';
-        }
-        diachi
-
-        // Kiểm tra các trường bổ sung
-        if (!nghe) {
-          isValid = false;
-          errorMessage += 'Vui lòng nhập nghề nghiệp.\n';
-        }
-
-        if (!ten_co_quan) {
-          isValid = false;
-          errorMessage += 'Vui lòng nhập tên cơ quan.\n';
-        }
-
-        if (!ho_ten_cha) {
-          isValid = false;
-          errorMessage += 'Vui lòng nhập họ tên cha.\n';
-        }
-
-        if (!ngaysinhcha) {
-          isValid = false;
-          errorMessage += 'Vui lòng nhập ngày sinh cha.\n';
-        }
-
-        if (!ho_ten_me) {
-          isValid = false;
-          errorMessage += 'Vui lòng nhập họ tên mẹ.\n';
-        }
-
-        if (!ngaysinhme) {
-          isValid = false;
-          errorMessage += 'Vui lòng nhập ngày sinh mẹ.\n';
-        }
-
-        if (!ho_ten_vo_chong) {
-          isValid = false;
-          errorMessage += 'Vui lòng nhập họ tên vợ/chồng.\n';
-        }
-
-        if (!ngaysinhvochong) {
-          isValid = false;
-          errorMessage += 'Vui lòng nhập ngày sinh vợ/chồng.\n';
-        }
-
-        if (!coquan) {
-          isValid = false;
-          errorMessage += 'Vui lòng chọn cơ quan.\n';
-        }
+        // Nếu hợp lệ thì gửi dữ liệu
         if (isValid) {
-          // Tạo đối tượng dữ liệu JSON từ form
           const formData = {
             hoten: hoten,
-            gioitinh: gioitinh,
+            gioitinh: gioitinh.value,
             ngaysinh: ngaysinh,
             noisinh: noisinh,
             cccd: cccd,
@@ -918,7 +878,6 @@
             tinh: tinh,
             quan: quan,
             diachinha: diachinha,
-            //Địa chỉ đk tạm trú 
             diachi: diachi,
             nghe: nghe,
             ten_co_quan: ten_co_quan,
@@ -930,29 +889,61 @@
             ngaysinhvochong: ngaysinhvochong,
             coquan: coquan
           };
+
+          // Gửi dữ liệu tới server
+          fetch('/insert', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+          })
+            .then(response => response.json())
+            .then(data => {
+              if (data.success) {
+                alert("Thêm hộ chiếu thành công!");
+              } else {
+                alert("Đã có lỗi xảy ra.");
+              }
+            })
+            .catch(error => console.error('Lỗi:', error));
+        }
+      });
+      // Hàm kiểm tra form
+      function validateForm(event) {
+        let isValid = true;
+
+        // Lấy tất cả các trường input trong form
+        const form = document.getElementById('passportForm');
+        const inputs = form.querySelectorAll('input');
+
+        // Lặp qua từng input để kiểm tra
+        inputs.forEach(function (input) {
+          const errorDiv = document.getElementById('error-' + input.name); // Lấy phần tử thông báo lỗi theo tên input
+          if (!input.validity.valid) {
+            isValid = false;
+            input.classList.add('error');
+            errorDiv.style.display = 'block'; // Hiển thị thông báo lỗi
+          } else {
+            errorDiv.style.display = 'none'; // Ẩn thông báo lỗi nếu hợp lệ
+          }
+        });
+
+        if (!isValid) {
+          event.preventDefault(); // Ngừng việc submit form nếu có lỗi
         }
 
-        // Gửi dữ liệu tới server
-        fetch('/insert', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(formData)
-        })
-          .then(response => response.json())
-          .then(data => {
-            if (data.success) {
-              alert("Thêm hộ chiếu thành công!");
-            } else {
-              alert("Đã xảy ra lỗi khi thêm hộ chiếu. Vui lòng thử lại.");
-            }
-          })
-          .catch(error => {
-            console.error('Error:', error);
-            alert("Đã xảy ra lỗi. Vui lòng thử lại.");
-          });
-      });
+        return isValid;
+      }
+
+      // Hàm tạo thông báo lỗi
+      function createErrorMessage(message) {
+        const errorDiv = document.createElement('div');
+        errorDiv.classList.add('error-message');
+        errorDiv.textContent = message;
+        return errorDiv;
+      }
+
     </script>
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js")}}"></script>

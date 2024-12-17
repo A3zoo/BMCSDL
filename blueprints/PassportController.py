@@ -15,7 +15,7 @@ def register_passport():
             flash("Thêm hộ chiếu thành công!", "success")
             return render_template('app/html/profile.html', passport = passport) 
         flash("Đã xảy ra lỗi khi thêm hộ chiếu. Vui lòng thử lại.", "error")
-        return render_template('app/html/nguoi_dang_ky_mh2.html', data = data)
+        return render_template('app/html/profile.html', data = data)
     return render_template("login_mh1.html")
 
 
