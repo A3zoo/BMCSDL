@@ -10,10 +10,10 @@ from typing import Optional
 ## Làm theeo encode oracle
 
 class UserAccount(Base):
-    __tablename__: str = 'UserAccount'
+    __tablename__: str = 'USERACCOUNT'
 
     Email: Mapped[str] = mapped_column(String(25), nullable=True, name='EMAIL')
-    Cccd: Mapped[str] = mapped_column(String(20), primary_key=True, name='CCCD')
+    CCCD: Mapped[str] = mapped_column(String(20), primary_key=True, name='CCCD')
     Sdt: Mapped[str] = mapped_column(String(25), nullable=True, name='SDT')
     Password: Mapped[str] = mapped_column(String(100), nullable=True, name='PASSWORD')
     UserType: Mapped[str] = mapped_column(String(15), nullable=True, name='USERTYPE')
@@ -33,7 +33,7 @@ def get_account_by_cccd_pw(cccd, password):
                 {"p_CCCD": cccd, "p_password": password}
             ).fetchall()
         if result[0][0] == 'TRUE':
-            user = session.query(UserAccount).filter(UserAccount.Cccd == cccd).first()
+            user = session.query(UserAccount).filter(UserAccount.CCCD == cccd).first()
             
             if user:
                 return UserAccountModel.validate(user)

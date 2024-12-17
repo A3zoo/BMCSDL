@@ -25,10 +25,10 @@ def login():
             return render_template("app/html/danh_sach_yeu_cau_cho_xac_thuc_mh4.html", listpassportdata =  data)
         elif session['vt'] == 'XD':
             data = get_all_passport_data()
-            return render_template("app/html/danh_sach_yeu_cau_cho_phe_duyet_mh7.html", listpassportdata =  data)
+            return render_template("app/html/XD.html", listpassportdata =  data)
         elif session['vt'] == 'LT':
-            data = get_all_passport_data()
-            return render_template("app/html/danh_sach_ket_qua_phe_duyet_mh10.html", listpassportdata =  data)
+            data = get_audit_trails_for_passport()
+            return render_template("app/html/LT.html", audit_trails = data)
         elif session['vt'] == 'GS':
             data = get_audit_trails_for_passport()
             return render_template('app/html/GS.html', audit_trails = data)
