@@ -16,7 +16,7 @@ def register_passport():
             return render_template('app/html/profile.html', passport = passport) 
         flash("Đã xảy ra lỗi khi thêm hộ chiếu. Vui lòng thử lại.", "error")
         return render_template('app/html/nguoi_dang_ky_mh2.html', data = data)
-    return render_template("login.html")
+    return render_template("login_mh1.html")
 
 
 @passportCT.route("/updatestatus", strict_slashes=False)

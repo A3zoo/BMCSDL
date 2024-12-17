@@ -22,4 +22,4 @@ def get_session(username, password, host = 'localhost', port = '1521', service= 
 
 def get_user_session():
         return get_session(session['cccd'], session['password'])
-mgr_Session = get_session('SEC_MGR', 'quangduy')
+mgr_Session = get_session('SEC_MGR', 'tranbach')

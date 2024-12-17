@@ -29,7 +29,7 @@ class UserAccountModel(BaseModel):
 def get_account_by_cccd_pw(cccd, password):
     with Session() as session:
         result = session.execute(
-                text('SELECT CheckLoginStatus(:p_CCCD,:p_password) AS result  FROM dual'),
+                text('SELECT db_manager.CheckLoginStatus(:p_CCCD,:p_password) AS result  FROM dual'),
                 {"p_CCCD": cccd, "p_password": password}
             ).fetchall()
         if result[0][0] == 'TRUE':

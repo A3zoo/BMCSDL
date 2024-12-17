@@ -286,7 +286,7 @@
                     <h4 class="card-header">Chi tiết hồ sơ</h4>
                     <!-- Account -->
                     <div class="card-body">
-                      <form id="formAccountSettings" method="POST" onsubmit="return false">
+                      <form id="passportForm" method="POST" onsubmit="return false">
                         <div class="row">
                           <div class="mb-3 col-md-6">
                             <label for="hoten" class="form-label">1. Họ và tên</label>
@@ -296,6 +296,7 @@
                               id="hoten"
                               name="hoten"
                               placeholder="Nhập đầy đủ họ và tên"
+                              required minlength="2" maxlength="100"
                             />
                           </div>
                           <div class="mb-3 col-md-6">
@@ -309,6 +310,7 @@
                                   value=""
                                   id="nam"
                                   checked
+                                  required
                                 />
                                 <label class="form-check-label" for="defaultRadio1">Nam</label>
                               </div>
@@ -325,12 +327,12 @@
                             </div>
                           </div>
                           <div class="mb-3 col-md-6">
-                            <label for="ngay_cap" class="form-label">3. Sinh ngày</label>
-                            <input class="form-control" type="date" value="2021-06-18" id="html5-date-input" />
+                            <label for="ngay_sinh" class="form-label">3. Sinh ngày</label>
+                            <input class="form-control" type="ngaysinh" value="2021-06-18" id="html5-date-input" required/>
                           </div>
                           <div class="mb-3 col-md-6">
                             <label class="form-label" for="country">Nơi sinh (theo giấy khai sinh)</label>
-                            <select id="country" class="select2 form-select">
+                            <select id="noisinh" class="select2 form-select" required>
                               <option value="">Chọn nơi sinh</option>
                               <option value="0">An Giang</option>
                               <option value="1">Bà Rịa-Vũng Tàu</option>
@@ -405,15 +407,16 @@
                               id="organization"
                               name="cccd"
                               placeholder="Nhập số CCCD"
+                              required pattern="^\d{12}$" title="CCCD phải có 12 chữ số"
                             />
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="ngay_cap" class="form-label">Ngày cấp</label>
-                            <input class="form-control" type="date" value="2021-06-18" id="html5-date-input" />
+                            <input class="form-control" type="ngaycap" value="2021-06-18" id="html5-date-input" required/>
                           </div>
                           <div class="mb-3 col-md-3">
                             <label class="form-label" for="country">5. Dân tộc</label>
-                            <select id="country" class="select2 form-select">
+                            <select id="dantoc" class="select2 form-select" required>
                               <option value="">Chọn dân tộc</option>
                               <option value="01">Kinh (Việt)</option>
                               <option value="02">Tày</option>
@@ -474,7 +477,7 @@
                           </div>
                           <div class="mb-3 col-md-3">
                             <label class="form-label" for="country">6. Tôn giáo</label>
-                            <select id="country" class="select2 form-select">
+                            <select id="tongiao" class="select2 form-select" required>
                               <option value="">Chọn tôn giáo</option>
                               <option value="0">Không có</option>
                               <option value="1">Phật giáo</option>
@@ -492,75 +495,76 @@
                               <span class="input-group-text">VN (+84)</span>
                               <input
                                 type="text"
-                                id="phoneNumber"
+                                id="sdt"
                                 name="phoneNumber"
                                 class="form-control"
                                 placeholder="202 555 0111"
+                                required pattern="^\d{10}$" title="Số điện thoại phải có 10 chữ số"
                               />
                             </div>
                           </div>
                           <div class="mb-3 col-md-4">
                             <label for="address" class="form-label">8. Địa chỉ đăng ký thường trú</label>
-                            <select class="select2 form-select" id='provinces' onchange='getProvinces(event)'>
+                            <select class="select2 form-select" id='tinh' onchange='getProvinces(event)' required>
                               <option value=''>Chọn tỉnh thành</option>
                             </select>                  
                           </div>
                           <div class="mb-3 col-md-4">
                             <label for="address" class="form-label">Quận/huyện</label>
-                            <select class="select2 form-select" id='districts' onchange='getDistricts(event)'>
+                            <select class="select2 form-select" id='quan' onchange='getDistricts(event)' required>
                               <option value=''>Chọn quận/huyện</option>
                             </select>               
                           </div>
                           <div class="mb-3 col-md-4">
                             <label for="address" class="form-label">Địa chỉ</label>
-                            <input class="form-control" type="text" id="wards" name="wards" placeholder="Nhập số nhà, tên đường, tổ, khu phố, phường" />
+                            <input class="form-control" type="text" id="diachinha" name="wards" placeholder="Nhập số nhà, tên đường, tổ, khu phố, phường" required/>
                           </div>
 
                           <div class="mb-3 col-md-12">
                             <label for="address" class="form-label">9. Địa chỉ đăng ký tạm trú</label>    
-                            <input class="form-control" type="text" id="diachi" placeholder="Nhập địa chỉ tạm trú" />
+                            <input class="form-control" type="text" id="diachi" placeholder="Nhập địa chỉ tạm trú" required/>
                           </div>
 
                           <div class="mb-3 col-md-6">
                             <label for="state" class="form-label">10. Nghề nghiệp</label>
-                            <input class="form-control" type="text" id="nghe"  placeholder="Nhập nghề nghiệp" />
+                            <input class="form-control" type="text" id="nghe"  placeholder="Nhập nghề nghiệp" required/>
                           </div>
 
                           <div class="mb-3 col-md-6">
                             <label for="zipCode" class="form-label">11. Tên và địa chỉ cơ quan</label>
-                            <input class="form-control" type="text" id="ten_co_quan"  placeholder="Nhập tên cơ quan - Địa chỉ" />
+                            <input class="form-control" type="text" id="ten_co_quan"  placeholder="Nhập tên cơ quan - Địa chỉ" required/>
                           </div>
 
                           <div class="mb-3 col-md-6">
                             <label for="state" class="form-label">12. Họ tên cha</label>
-                            <input class="form-control" type="text" id="ho_ten_cha"  placeholder="Nhập họ tên cha" />
+                            <input class="form-control" type="text" id="ho_ten_cha"  placeholder="Nhập họ tên cha" required/>
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="ngay_cap" class="form-label">Ngày sinh</label>
-                            <input class="form-control" type="date" value="2000-01-01" id="html5-date-input" />
+                            <input class="form-control" type="ngaysinhcha" value="2000-01-01" id="html5-date-input" required/>
                           </div>
 
                           <div class="mb-3 col-md-6">
                             <label for="zipCode" class="form-label">13. Họ tên mẹ</label>
-                            <input class="form-control" type="text" id="ho_ten_me"  placeholder="Nhập họ tên mẹ" />
+                            <input class="form-control" type="text" id="ho_ten_me"  placeholder="Nhập họ tên mẹ" required/>
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="ngay_cap" class="form-label">Ngày sinh</label>
-                            <input class="form-control" type="date" value="2000-01-01" id="html5-date-input" />
+                            <input class="form-control" type="ngaysinhme" value="2000-01-01" id="html5-date-input" required/>
                           </div>
                           <!-- / Họ tên vợ chồng -->
                           <div class="mb-3 col-md-6">
                             <label for="zipCode" class="form-label">Họ tên Vợ/Chồng</label>
-                            <input class="form-control" type="text" id="ho_ten_vo_chong"  placeholder="Nhập họ tên vợ/chồng" />
+                            <input class="form-control" type="text" id="ho_ten_vo_chong"  placeholder="Nhập họ tên vợ/chồng" required/>
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="ngay_cap" class="form-label">Ngày sinh</label>
-                            <input class="form-control" type="date" value="2000-01-01" id="html5-date-input" />
+                            <input class="form-control" type="ngaysinhvochong" value="2000-01-01" id="html5-date-input" required/>
                           </div>
 
                           <div class="mb-3 col-md-12">
                             <label class="form-label" for="country">14. Cơ quan tiếp nhận</label>
-                            <select id="country" class="select2 form-select">
+                            <select id="coquan" class="select2 form-select" required>
                               <option value="">Chọn nơi tiếp nhận</option>
                               <option value="0">Cục Quản lý XNC tại TP Hồ Chí Minh</option>
                               <option value="1">Cục Quản lý XNC tại Hà Nội</option>
@@ -637,7 +641,7 @@
                             </select>
                           </div>
                         <div class="mt-2">
-                          <button type="submit" class="btn btn-primary me-2">Xác nhận</button>
+                          <button type="submit" class="btn btn-primary me-2" id="submitBtn">Xác nhận</button>
                           <button type="reset" class="btn btn-outline-secondary">Hủy</button>
                         </div>
                       </form>
@@ -714,54 +718,242 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <script>
       fetch('https://vn-public-apis.fpo.vn/provinces/getAll?limit=-1')
-      .then(response => response.json())
-      .then(data => {
-        let provinces = data.data.data;
-        provinces.map(value => document.getElementById('provinces').innerHTML += `<option value='${value.code}'>${value.name}</option>`);
-      })
-      .catch(error => {
-        console.error('Lỗi khi gọi API:', error);
+        .then(response => response.json())
+        .then(data => {
+          let provinces = data.data.data;
+          provinces.map(value => document.getElementById('provinces').innerHTML += `<option value='${value.code}'>${value.name}</option>`);
+        })
+        .catch(error => {
+          console.error('Lỗi khi gọi API:', error);
+        });
+
+      function fetchDistricts(provincesID) {
+        fetch(`https://vn-public-apis.fpo.vn/districts/getByProvince?provinceCode=${provincesID}&limit=-1`)
+          .then(response => response.json())
+          .then(data => {
+            let districts = data.data.data;
+            document.getElementById('districts').innerHTML = `<option value=''>Chọn quận/huyện</option>`;
+            if (districts !== undefined) {
+              districts.map(value => document.getElementById('districts').innerHTML += `<option value='${value.code}'>${value.name}</option>`);
+            }
+          })
+          .catch(error => {
+            console.error('Lỗi khi gọi API:', error);
+          });
+      }
+
+      function fetchWards(districtsID) {
+        fetch(`https://vn-public-apis.fpo.vn/wards/getByDistrict?districtCode=${districtsID}&limit=-1`)
+          .then(response => response.json())
+          .then(data => {
+            let wards = data.data.data;
+            document.getElementById('wards').innerHTML = `<option value=''>-- select wards --</option>`;
+            if (wards !== undefined) {
+              wards.map(value => document.getElementById('wards').innerHTML += `<option value='${value.code}'>${value.name}</option>`);
+            }
+          })
+          .catch(error => {
+            console.error('Lỗi khi gọi API:', error);
+          });
+      }
+
+      function getProvinces(event) {
+        fetchDistricts(event.target.value);
+        document.getElementById('wards').innerHTML = `<option value=''>-- select wards --</option>`;
+      }
+
+      function getDistricts(event) {
+        fetchWards(event.target.value);
+      }
+    </script>
+
+    <!--Hàm xử lý thêm dữ liệu khi nhấn nút xác nhận-->
+    <script>
+      document.getElementById('passportForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+        // Lấy dữ liệu từ các input và select
+        const hoten = document.getElementById('hoten').value;
+        const gioitinh = document.querySelector('input[name="gioitinh"]:checked');
+        const ngaysinh = document.getElementById('ngaysinh').value;
+        const noisinh = document.getElementById('noisinh').value;
+        const cccd = document.getElementById('cccd').value;
+        const ngaycap = document.getElementById('ngaycap').value;
+        const dantoc = document.getElementById('dantoc').value;
+        const tongiao = document.getElementById('tongiao').value;
+        const sdt = document.getElementById('sdt').value;
+        //Địa chỉ đk thường trú 
+        const tinh = document.getElementById('tinh').value;
+        const quan = document.getElementById('quan').value;
+        const diachinha = document.getElementById('diachinha').value;
+        //Địa chỉ đk tạm trú 
+        const diachi = document.getElementById('diachi').value;
+
+        const nghe = document.getElementById('nghe').value;
+        const ten_co_quan = document.getElementById('ten_co_quan').value;
+        const ho_ten_cha = document.getElementById('ho_ten_cha').value;
+        const ngaysinhcha = document.getElementById('ngaysinhcha').value;
+        const ho_ten_me = document.getElementById('ho_ten_me').value;
+        const ngaysinhme = document.getElementById('ngaysinhme').value;
+        const ho_ten_vo_chong = document.getElementById('ho_ten_vo_chong').value;
+        const ngaysinhvochong = document.getElementById('ngaysinhvochong').value;
+        const coquan = document.getElementById('coquan').value;
+
+        let isValid = true;
+        let errorMessage = '';
+
+        // Kiểm tra các trường đã có sẵn
+        if (!hoten || hoten.length < 2 || hoten.length > 100) {
+          isValid = false;
+          errorMessage += 'Họ và tên không hợp lệ. (2 - 100 ký tự)\n';
+        }
+
+        if (!gioitinh) {
+          isValid = false;
+          errorMessage += 'Vui lòng chọn giới tính.\n';
+        }
+
+        if (!noisinh) {
+          isValid = false;
+          errorMessage += 'Vui lòng nhập nơi sinh.\n';
+        }
+
+        if (!cccd || !/^\d{12}$/.test(cccd)) {
+          isValid = false;
+          errorMessage += 'CCCD phải có 12 chữ số.\n';
+        }
+
+        if (!ngaycap) {
+          isValid = false;
+          errorMessage += 'Vui lòng chọn ngày cấp.\n';
+        }
+
+        if (!dantoc) {
+          isValid = false;
+          errorMessage += 'Vui lòng nhập dân tộc.\n';
+        }
+
+        if (!tongiao) {
+          isValid = false;
+          errorMessage += 'Vui lòng nhập tôn giáo.\n';
+        }
+
+        if (!sdt || !/^\d{10}$/.test(sdt)) {
+          isValid = false;
+          errorMessage += 'Số điện thoại phải có 10 chữ số.\n';
+        }
+
+        if (!tinh || !quan) {
+          isValid = false;
+          errorMessage += 'Vui lòng chọn tỉnh và quận.\n';
+        }
+
+        if (!diachinha) {
+          isValid = false;
+          errorMessage += 'Vui lòng nhập địa chỉ nhà.\n';
+        }
+        //Địa chỉ đk tạm trú 
+        if (!diachi) {
+          isValid = false;
+          errorMessage += 'Vui lòng nhập địa tạm trú.\n';
+        }
+        diachi
+
+        // Kiểm tra các trường bổ sung
+        if (!nghe) {
+          isValid = false;
+          errorMessage += 'Vui lòng nhập nghề nghiệp.\n';
+        }
+
+        if (!ten_co_quan) {
+          isValid = false;
+          errorMessage += 'Vui lòng nhập tên cơ quan.\n';
+        }
+
+        if (!ho_ten_cha) {
+          isValid = false;
+          errorMessage += 'Vui lòng nhập họ tên cha.\n';
+        }
+
+        if (!ngaysinhcha) {
+          isValid = false;
+          errorMessage += 'Vui lòng nhập ngày sinh cha.\n';
+        }
+
+        if (!ho_ten_me) {
+          isValid = false;
+          errorMessage += 'Vui lòng nhập họ tên mẹ.\n';
+        }
+
+        if (!ngaysinhme) {
+          isValid = false;
+          errorMessage += 'Vui lòng nhập ngày sinh mẹ.\n';
+        }
+
+        if (!ho_ten_vo_chong) {
+          isValid = false;
+          errorMessage += 'Vui lòng nhập họ tên vợ/chồng.\n';
+        }
+
+        if (!ngaysinhvochong) {
+          isValid = false;
+          errorMessage += 'Vui lòng nhập ngày sinh vợ/chồng.\n';
+        }
+
+        if (!coquan) {
+          isValid = false;
+          errorMessage += 'Vui lòng chọn cơ quan.\n';
+        }
+        if (isValid) {
+          // Tạo đối tượng dữ liệu JSON từ form
+          const formData = {
+            hoten: hoten,
+            gioitinh: gioitinh,
+            ngaysinh: ngaysinh,
+            noisinh: noisinh,
+            cccd: cccd,
+            ngaycap: ngaycap,
+            dantoc: dantoc,
+            tongiao: tongiao,
+            sdt: sdt,
+            tinh: tinh,
+            quan: quan,
+            diachinha: diachinha,
+            //Địa chỉ đk tạm trú 
+            diachi: diachi,
+            nghe: nghe,
+            ten_co_quan: ten_co_quan,
+            ho_ten_cha: ho_ten_cha,
+            ngaysinhcha: ngaysinhcha,
+            ho_ten_me: ho_ten_me,
+            ngaysinhme: ngaysinhme,
+            ho_ten_vo_chong: ho_ten_vo_chong,
+            ngaysinhvochong: ngaysinhvochong,
+            coquan: coquan
+          };
+        }
+
+        // Gửi dữ liệu tới server
+        fetch('/insert', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              alert("Thêm hộ chiếu thành công!");
+            } else {
+              alert("Đã xảy ra lỗi khi thêm hộ chiếu. Vui lòng thử lại.");
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert("Đã xảy ra lỗi. Vui lòng thử lại.");
+          });
       });
-
-    function fetchDistricts (provincesID) {
-      fetch(`https://vn-public-apis.fpo.vn/districts/getByProvince?provinceCode=${provincesID}&limit=-1`)
-        .then(response => response.json())
-        .then(data => {
-          let districts = data.data.data;
-          document.getElementById('districts').innerHTML = `<option value=''>Chọn quận/huyện</option>`;
-          if (districts !== undefined) {
-            districts.map(value => document.getElementById('districts').innerHTML += `<option value='${value.code}'>${value.name}</option>`);
-          }
-        })
-        .catch(error => {
-          console.error('Lỗi khi gọi API:', error);
-        });
-    }
-
-    function fetchWards (districtsID) {
-      fetch(`https://vn-public-apis.fpo.vn/wards/getByDistrict?districtCode=${districtsID}&limit=-1`)
-        .then(response => response.json())
-        .then(data => {
-          let wards = data.data.data;
-          document.getElementById('wards').innerHTML = `<option value=''>-- select wards --</option>`;
-          if (wards !== undefined) {
-            wards.map(value => document.getElementById('wards').innerHTML += `<option value='${value.code}'>${value.name}</option>`);
-          }
-        })
-        .catch(error => {
-          console.error('Lỗi khi gọi API:', error);
-        });
-    }
-
-    function getProvinces (event) {
-      fetchDistricts(event.target.value);
-      document.getElementById('wards').innerHTML = `<option value=''>-- select wards --</option>`;
-    }
-
-    function getDistricts (event) {
-      fetchWards(event.target.value);
-    }
-      </script>
+    </script>
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js")}}"></script>
   </body>
