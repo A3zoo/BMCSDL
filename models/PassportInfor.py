@@ -43,7 +43,7 @@ class PassportData(Base):
 
 class PassportDataModel(BaseModel):
     model_config = ConfigDict(from_attributes=True)
-    Id: Optional[UUID4] 
+    Id: Optional[uuid.UUID] = Field(default_factory=uuid.uuid4)
     HoVaTen: Optional[str]
     GioiTinh: Optional[int] 
     SinhNgay: Optional[date] 
@@ -73,7 +73,6 @@ def create_passport_data(payload: PassportDataModel):
     Session = get_user_session()
     with Session() as session:
         passport = PassportData(
-            Id=payload.Id,
             HoVaTen=payload.HoVaTen,
             GioiTinh=payload.GioiTinh,
             SinhNgay=payload.SinhNgay,
@@ -94,10 +93,10 @@ def create_passport_data(payload: PassportDataModel):
             HoTenVoChong=payload.HoTenVoChong,
             NgaySinhVoChong=payload.NgaySinhVoChong,
             NoiDungDeNghi=payload.NoiDungDeNghi,
-            CoGanChip=payload.CoGanChip,
+            CoGanChip=0,
             NoiTiepNhan=payload.NoiTiepNhan,
-            DiaChiNopHoSo=payload.DiaChiNopHoSo,
-            TrangThai=payload.TrangThai
+            DiaChiNopHoSo=None,
+            TrangThai=1
         )
         session.add(passport)
         session.commit()
