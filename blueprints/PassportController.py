@@ -19,7 +19,7 @@ def register_passport():
     return render_template("login_mh1.html")
 
 
-@passportCT.route("/updatestatus", strict_slashes=False)
+@passportCT.route("/updatestatus", methods=["PUT"],strict_slashes=False)
 def update_status():
     data = request.get_json()
 

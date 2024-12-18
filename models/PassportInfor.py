@@ -115,13 +115,14 @@ def get_passport_data(cccd):
 
 
 def update_status_passport_data_by_cccd(cccd, status):
-    Session = get_session('db_manager', 'quangduy')
+    Session = get_user_session()
     with Session() as session_db:
         passport = session_db.query(PassportData).filter_by(SoCCCD=cccd).first()
         if passport:
             passport.TrangThai = status
+            data = PassportDataModel.model_validate(passport) 
             session_db.commit()
-            return PassportDataModel.model_validate(passport) 
+            return data
         else:
             return None
 

@@ -365,7 +365,7 @@
             },
             body: JSON.stringify({ cccd: cccd, aggre: aggre }) // Dữ liệu gửi đi
           }).then(response => {
-            alert(response); 
+            alert(response.message); 
             // Kiểm tra nếu phản hồi thành công (status code 200 OK)
             if (!response.ok) {
                 throw new Error(`Server responded with ${response.status}`);
