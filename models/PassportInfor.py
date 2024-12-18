@@ -43,7 +43,7 @@ class PassportData(Base):
 
 class PassportDataModel(BaseModel):
     model_config = ConfigDict(from_attributes=True)
-    Id: Optional[uuid.UUID] = Field(default_factory=uuid.uuid4)
+    Id: Optional[uuid.UUID] = Field(default_factory=lambda: uuid.uuid4().bytes)
     HoVaTen: Optional[str]
     GioiTinh: Optional[int] 
     SinhNgay: Optional[date] 
@@ -114,7 +114,7 @@ def get_passport_data(cccd):
 
 
 def update_status_passport_data_by_cccd(cccd, status):
-    Session = get_session('db_manager', 'quangduy')
+    Session = get_session('db_manager', 'tranbach')
     with Session() as session_db:
         passport = session_db.query(PassportData).filter_by(SoCCCD=cccd).first()
         if passport:

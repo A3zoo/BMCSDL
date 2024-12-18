@@ -9,8 +9,6 @@ from blueprints.PassportController import passportCT
 app = Flask(__name__)
 
 app.secret_key = "ENTER_YOUR_SECRET_KEY"
-
-
 @app.route('/')
 def login():
     return render_template('app/html/login_mh1.html')

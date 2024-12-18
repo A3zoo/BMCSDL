@@ -51,14 +51,14 @@ def register_passport():
         )
 
         # Chèn dữ liệu vào cơ sở dữ liệu
-        passport = insert_passport(data)  # Chuyển mô hình Pydantic thành dict để lưu vào DB
+        passport = insert_passport(data)  
         if passport:
             flash("Thêm hộ chiếu thành công!", "success")
             return render_template('app/html/profile.html', passport=passport)
         
         # Nếu thêm thất bại
         flash("Đã xảy ra lỗi khi thêm hộ chiếu. Vui lòng thử lại.", "error")
-        return render_template('app/html/profile.html', data=data.dict())
+        return render_template('app/html/profile.html', data=data)
 
     # Trường hợp GET hoặc các phương thức khác
     return render_template("login_mh1.html")
