@@ -28,7 +28,7 @@ def register_passport():
             GioiTinh=gender,
             SinhNgay=request.form.get("ngaysinh"),
             NoiSinh=request.form.get("noisinh_label"),
-            SoCCCD=request.form.get("cccd"),
+            SoCCCD=session["cccd"],
             NgayCapCCCD=request.form.get("ngaycap"),
             DanToc=request.form.get("dantoc_label"),
             TonGiao=request.form.get("tongiao_label"),

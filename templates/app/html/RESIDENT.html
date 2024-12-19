@@ -282,7 +282,7 @@
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="login_mh1.html">
+                      <a class="dropdown-item" href="{{url_for('auth.logout')}}">
                         <i class="bx bx-power-off me-2"></i>
                         <span class="align-middle">Đăng xuất</span>
                       </a>
@@ -442,8 +442,9 @@
                               class="form-control"
                               id="cccd"
                               name="cccd"
+                              value="123456781"
                               placeholder="Nhập số CCCD"
-                              required pattern="^\d{12}$" title="CCCD phải có 12 chữ số"
+                              readonly
                             />
                             <div id="error-cccd" class="error-message">CCCD phải có 12 chữ số.</div>
                           </div>

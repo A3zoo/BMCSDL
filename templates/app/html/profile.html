@@ -67,7 +67,11 @@
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
         <!-- Menu -->
-
+         <label>1 : đang chờ xác thực,
+          2: đang chờ phê duyệt,
+          3: phê duyệt thành công,
+          4: từ chối </label>
+        <label >Trạng thái {{passport.TrangThai}}</label>
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
           <div class="app-brand demo">
             <a href="nguoi_dang_ky_mh2.html" class="app-brand-link">
@@ -154,12 +158,6 @@
                   </a>
                 </li>
               </ul>
-            </li>
-            <li class="menu-item">
-              <a href="trang_thai_phe_duyet_mh3.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-table"></i>
-                <div data-i18n="Tables">Tình trạng hồ sơ</div>
-              </a>
             </li>
             <!-- Misc -->
             <li class="menu-header small text-uppercase"><span class="menu-header-text">Khác</span></li>
@@ -249,7 +247,7 @@
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="login_mh1.html">
+                      <a class="dropdown-item" href="{{url_for('auth.logout')}}">
                         <i class="bx bx-power-off me-2"></i>
                         <span class="align-middle">Đăng xuất</span>
                       </a>
