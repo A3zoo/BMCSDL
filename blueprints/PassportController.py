@@ -61,7 +61,7 @@ def register_passport():
         return render_template('app/html/profile.html', data=data)
 
     # Trường hợp GET hoặc các phương thức khác
-    return render_template("login_mh1.html")
+    return render_template("login.html")
 
 
 @passportCT.route("/updatestatus", methods=["PUT"],strict_slashes=False)
