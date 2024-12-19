@@ -32,6 +32,7 @@ def login():
         elif session['vt'] == 'GS':
             data = get_audit_trails_for_passport()
             return render_template('app/html/GS.html', audit_trails = data)
+        
         return render_template("app/html/nguoi_dang_ky_mh2.html", duy =  result)
     return render_template("login.html")
 
