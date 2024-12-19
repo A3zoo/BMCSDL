@@ -265,7 +265,6 @@
                   <table class="table">
                     <thead>
                       <tr>
-                        <th>ID</th>
                         <th>Họ và Tên</th>
                         <th>Giới Tính</th>
                         <th>Ngày Sinh</th>
@@ -279,17 +278,36 @@
                     <tbody class="table-border-bottom-0">
                       {% for passport in listpassportdata %}
                         <tr id="{{ passport.SoCCCD }}">
-                            <td>{{ passport.Id }}</td>
                             <td>{{ passport.HoVaTen }}</td>
-                            <td>{{ passport.GioiTinh }}</td>
+                            <td>
+                              {% if passport.GioiTinh == 1 %}
+                                  Nam
+                              {% elif passport.GioiTinh == 0 %}
+                                  Nữ
+                              {% else %}
+                                  Không xác định
+                              {% endif %}
+                            </td>
                             <td>{{ passport.SinhNgay }}</td>
                             <td>{{ passport.NoiSinh }}</td>
                             <td>{{ passport.SoCCCD }}</td>
                             <td>{{ passport.NgayCapCCCD }}</td>
                             <td>{{ passport.DiaChiDangKyThuongTru }}</td>
-                            <td>{{ passport.TrangThai }}</td>
                             <td>
-                              <button type="button" class="btn btn-primary me-2" onclick="updateStatus('{{ passport.SoCCCD }}', 2)">Đã phê duyệt</button>
+                              {% if passport.TrangThai == 1 %}
+                                  <span class="badge bg-label-warning me-1">Chờ xác thực</span>
+                              {% elif passport.TrangThai == 2 %}
+                                  <span class="badge bg-label-info me-1">Chờ phê duyệt</span>
+                              {% elif passport.TrangThai == 3 %}
+                                  <span class="badge bg-label-success me-1">Đã phê duyệt</span>
+                              {% elif passport.TrangThai == 4 %}
+                                  <span class="badge bg-label-danger me-1">Từ chối</span>
+                              {% else %}
+                                  <span class="badge bg-label-secondary me-1">Không xác định</span>
+                              {% endif %}
+                            </td>
+                            <td>
+                              <button type="button" class="btn btn-primary me-2" onclick="updateStatus('{{ passport.SoCCCD }}', 2)">Xác thực</button>
                               <button type="button" class="btn btn-danger" onclick="updateStatus('{{ passport.SoCCCD }}', 4)">Từ chối</button>
                             </td>
                         </tr>
