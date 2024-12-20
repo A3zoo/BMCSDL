@@ -133,3 +133,5 @@ def get_all_passport_data():
     with Session() as session_db:
         passport_data_list = session_db.query(PassportData).all()
         return [PassportDataModel.model_validate(passport) for passport in passport_data_list]
+
+
