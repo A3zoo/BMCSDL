@@ -1,6 +1,6 @@
 from .base import Base
 from sqlalchemy.orm import mapped_column, Mapped
-from sqlalchemy import UUID, Date, String, CheckConstraint, ForeignKey, CHAR, Integer
+from sqlalchemy import UUID, Date, String, CheckConstraint, ForeignKey, CHAR, Integer, LargeBinary
 import uuid
 from pydantic import BaseModel, Field, ConfigDict
 from typing import Optional
@@ -9,8 +9,11 @@ from database import get_user_session
 
 class ResidentData(Base):
     __tablename__ = 'RESIDENTDATA'
-    Id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, name='ID'
+    Id: Mapped[uuid.UUID] =  mapped_column(
+        LargeBinary(16),  # Sử dụng LargeBinary(16) để tương ứng với RAW(16) trong Oracle
+        primary_key=True, 
+        default=lambda: uuid.uuid4().bytes,  # Lấy bytes từ UUID
+        name='ID'
     )
     HoVaTen: Mapped[str] = mapped_column(String(100), nullable=False, name='HOVATEN')
     GioiTinh: Mapped[int] = mapped_column(Integer, nullable=True, name='GIOITINH')
@@ -35,7 +38,7 @@ class ResidentData(Base):
 
 class ResidentDataModel(BaseModel):
     model_config = ConfigDict(from_attributes=True)
-    Id: Optional[uuid.UUID]
+    Id: Optional[uuid.UUID] = Field(default_factory=lambda: uuid.uuid4().bytes)
     HoVaTen: Optional[str] 
     GioiTinh: Optional[int] 
     SinhNgay: Optional[date] 

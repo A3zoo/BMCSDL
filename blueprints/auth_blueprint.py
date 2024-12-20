@@ -36,11 +36,23 @@ def login():
         passport = get_passport_data(session['cccd'])
         if passport:
             return render_template("app/html/profile.html", passport = passport)
-        return render_template("app/html/RESIDENT.html", bach =  result)
+        return render_template("app/html/RESIDENT.html", cccd = session['cccd'])
     return redirect("/")
 
 def get_audit_trails_for_passport():
     return get_all_audit()
+
+# Create Sign Out Route which we'll create a button for
+@auth_views.route("/returnpage", strict_slashes=False)
+def returnpage():
+    if session['vt'] == 'XT':
+        data = get_all_passport_data()
+        return render_template("app/html/XT.html", listpassportdata =  data)
+    elif session['vt'] == 'XD':
+        data = get_all_passport_data()
+        return render_template("app/html/XD.html", listpassportdata =  data)
+    return redirect("/")
+
 
 # Create Sign Out Route which we'll create a button for
 @auth_views.route("/logout", strict_slashes=False)

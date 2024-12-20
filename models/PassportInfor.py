@@ -104,7 +104,7 @@ def create_passport_data(payload: PassportDataModel):
 
 
 def get_passport_data(cccd):
-    Session = get_session('db_manager', 'tranbach')
+    Session = get_user_session()
     with Session() as session:
         passport = session.query(PassportData).filter_by(SoCCCD=cccd).first()
         if passport:
@@ -114,7 +114,6 @@ def get_passport_data(cccd):
 
 
 def update_status_passport_data_by_cccd(cccd, status):
-    Session = get_session('db_manager', 'tranbach')
 
     Session = get_user_session()
 

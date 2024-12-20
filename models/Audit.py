@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import Optional
-from sqlalchemy import Column, Integer, String, TIMESTAMP
+from sqlalchemy import Column, Integer, String, TIMESTAMP, desc
 from sqlalchemy.ext.declarative import declarative_base
 from pydantic import BaseModel, ConfigDict
 from .base import Base
@@ -33,7 +33,7 @@ def get_all_audit():
     Session = get_user_session()  # Hàm này trả về một session kết nối tới database
     with Session() as session_db:
         # Truy vấn tất cả các bản ghi trong bảng PassportAuditLog
-        audits = session_db.query(PassportAuditLog).all()
+        audits = session_db.query(PassportAuditLog).order_by(desc(PassportAuditLog.change_date)).all()
         
         # Nếu có dữ liệu, chuyển đổi từng bản ghi thành PassportAuditLogModel
         if audits:

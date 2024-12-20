@@ -278,8 +278,8 @@
                     <tbody class="table-border-bottom-0">
                       {% for passport in listpassportdata %}
                         <tr id="{{ passport.SoCCCD }}">
-                            <td>{{ passport.HoVaTen }}</td>
-                            <td>
+                          <td><a href="{{ url_for('passport.get_chi_tiet', cccd=passport.SoCCCD) }}">{{ passport.HoVaTen }}</a></td>
+                          <td>
                               {% if passport.GioiTinh == 1 %}
                                   Nam
                               {% elif passport.GioiTinh == 0 %}

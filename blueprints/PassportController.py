@@ -86,12 +86,13 @@ def update_status():
     return jsonify({"message": str_dir[result.TrangThai] + str(result.SoCCCD)})
     
 
-@passportCT.route("/XemChiTiet", methods=["PUT"],strict_slashes=False)
+@passportCT.route("/XemChiTiet", methods=["GET"],strict_slashes=False)
 def get_chi_tiet():
-    passport = get_passport_data(session['cccd'])
+    cccd = request.args.get("cccd")
+    passport = get_passport_data(cccd)
     if session['vt'] == 'XD':
         return render_template("app/html/XDCT.html", passport = passport)
-    resident = resident_data(session['cccd'])
+    resident = resident_data(cccd)
     return render_template("app/html/XTCT.html", passport = passport, resident = resident)
 
 
