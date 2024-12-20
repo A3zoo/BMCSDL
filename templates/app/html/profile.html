@@ -28,6 +28,13 @@
     />
 
     <title>Account settings - Account | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
+    <style>
+      .input-group-text.readonly-style {
+        background-color: #e9ecef; /* Màu nền của input readonly mặc định */
+        color: #6c757d; /* Màu chữ của input readonly mặc định */
+        border: 1px solid #ced4da; /* Viền của input readonly */
+      }
+    </style>
 
     <meta name="description" content="" />
 
@@ -60,6 +67,7 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{url_for("static", filename="assets/js/config.js")}}"></script>
+    
   </head>
 
   <body>
@@ -67,7 +75,6 @@
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
         <!-- Menu -->
-
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
           <div class="app-brand demo">
             <a href="nguoi_dang_ky_mh2.html" class="app-brand-link">
@@ -154,12 +161,6 @@
                   </a>
                 </li>
               </ul>
-            </li>
-            <li class="menu-item">
-              <a href="trang_thai_phe_duyet_mh3.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-table"></i>
-                <div data-i18n="Tables">Tình trạng hồ sơ</div>
-              </a>
             </li>
             <!-- Misc -->
             <li class="menu-header small text-uppercase"><span class="menu-header-text">Khác</span></li>
@@ -249,7 +250,7 @@
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="login_mh1.html">
+                      <a class="dropdown-item" href="{{url_for('auth.logout')}}">
                         <i class="bx bx-power-off me-2"></i>
                         <span class="align-middle">Đăng xuất</span>
                       </a>
@@ -283,7 +284,20 @@
                     </li>
                   </ul>
                   <div class="card mb-4">
-                    <h4 class="card-header">Chi tiết hồ sơ</h4>
+                    <h4 class="card-header">Trạng thái hồ sơ hồ sơ:
+                      {% if passport.TrangThai == 1 %}
+                          <span class="badge bg-label-warning me-1" style="font-size: 15px; padding: 10px;">Chờ xác thực</span>
+                      {% elif passport.TrangThai == 2 %}
+                          <span class="badge bg-label-info me-1" style="font-size: 15px; padding: 10px;">Chờ phê duyệt</span>
+                      {% elif passport.TrangThai == 3 %}
+                          <span class="badge bg-label-success me-1" style="font-size: 15px; padding: 10px;">Đã phê duyệt</span>
+                      {% elif passport.TrangThai == 4 %}
+                          <span class="badge bg-label-danger me-1" style="font-size: 15px; padding: 10px;">Từ chối</span>
+                      {% else %}
+                          <span class="badge bg-label-secondary me-1" style="font-size: 15px; padding: 10px;">Không xác định</span>
+                      {% endif %}
+                    </h4>
+                    
                     <!-- Account -->
                     <div class="card-body">
                       <form id="formAccountSettings" method="POST" onsubmit="return false">
@@ -295,7 +309,7 @@
                               type="text"
                               id="hoten"
                               name="hoten"
-                              placeholder="Nhập đầy đủ họ và tên"
+                              value="{{passport.HoVaTen}}"
                               readonly 
                             />
                           </div>
@@ -309,9 +323,10 @@
                                   type="radio"
                                   value=""
                                   id="nam"
-                                  checked
+                                  {% if passport.GioiTinh == 1 %}checked{% endif %}
+                                  disabled
                                 />
-                                <label class="form-check-label" for="defaultRadio1">Nam</label>
+                                <label class="form-check-label" for="nam">Nam</label>
                               </div>
                               <div class="form-check">
                                 <input
@@ -320,82 +335,22 @@
                                   type="radio"
                                   value=""
                                   id="nu"
+                                  {% if passport.GioiTinh == 0 %}checked{% endif %}
+                                  disabled
                                 />
-                                <label class="form-check-label" for="defaultRadio2">Nữ</label>
+                                <label class="form-check-label" for="nu">Nữ</label>
                               </div>
                             </div>
+                            
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="ngay_cap" class="form-label">3. Sinh ngày</label>
-                            <input class="form-control" type="date" value="2021-06-18" id="html5-date-input" />
+                            <input class="form-control" type="date" value="{{passport.SinhNgay}}" id="html5-date-input" readonly/>
                           </div>
                           <div class="mb-3 col-md-6">
                             <label class="form-label" for="country">Nơi sinh (theo giấy khai sinh)</label>
-                            <select id="country" class="select2 form-select">
-                              <option value="">Chọn nơi sinh</option>
-                              <option value="0">An Giang</option>
-                              <option value="1">Bà Rịa-Vũng Tàu</option>
-                              <option value="2">Bắc Giang</option>
-                              <option value="3">Bắc Kạn</option>
-                              <option value="4">Bạc Liêu</option>
-                              <option value="5">Bắc Ninh</option>
-                              <option value="6">Bến Tre</option>
-                              <option value="7">Bình Định</option>
-                              <option value="8">Bình Dương</option>
-                              <option value="9">Bình Phước</option>
-                              <option value="10">Bình Thuận</option>
-                              <option value="11">Cà Mau</option>
-                              <option value="12">Cần Thơ</option>
-                              <option value="13">Cao Bằng</option>
-                              <option value="14">Đà Nẵng</option>
-                              <option value="15">Đắk Lắk</option>
-                              <option value="16">Đắk Nông</option>
-                              <option value="17">Điện Biên</option>
-                              <option value="18">Đồng Nai</option>
-                              <option value="19">Đồng Tháp</option>
-                              <option value="20">Gia Lai</option>
-                              <option value="21">Hà Giang</option>
-                              <option value="22">Hà Nam</option>
-                              <option value="23">Hà Nội</option>
-                              <option value="24">Hà Tĩnh</option>
-                              <option value="25">Hải Dương</option>
-                              <option value="26">Hải Phòng</option>
-                              <option value="27">Hậu Giang</option>
-                              <option value="28">TP. Hồ Chí Minh</option>
-                              <option value="29">Hòa Bình</option>
-                              <option value="30">Hưng Yên</option>
-                              <option value="31">Khánh Hòa</option>
-                              <option value="32">Kiên Giang</option>
-                              <option value="33">Kon Tum</option>
-                              <option value="34">Lai Châu</option>
-                              <option value="35">Lâm Đồng</option>
-                              <option value="36">Lạng Sơn</option>
-                              <option value="37">Lào Cai</option>
-                              <option value="38">Long An</option>
-                              <option value="39">Nam Định</option>
-                              <option value="40">Nghệ An</option>
-                              <option value="41">Ninh Bình</option>
-                              <option value="42">Ninh Thuận</option>
-                              <option value="43">Phú Thọ</option>
-                              <option value="44">Phú Yên</option>
-                              <option value="45">Quảng Bình</option>
-                              <option value="46">Quảng Nam</option>
-                              <option value="47">Quảng Ngãi</option>
-                              <option value="48">Quảng Ninh</option>
-                              <option value="49">Quảng Trị</option>
-                              <option value="50">Sóc Trăng</option>
-                              <option value="51">Sơn La</option>
-                              <option value="52">Tây Ninh</option>
-                              <option value="53">Thái Bình</option>
-                              <option value="54">Thái Nguyên</option>
-                              <option value="55">Thanh Hóa</option>
-                              <option value="56">Thừa Thiên - Huế</option>
-                              <option value="57">Tiền Giang</option>
-                              <option value="58">Trà Vinh</option>
-                              <option value="59">Tuyên Quang</option>
-                              <option value="60">Vĩnh Long</option>
-                              <option value="61">Vĩnh Phúc</option>
-                              <option value="62">Yên Bái</option>
+                            <select id="country" class="select2 form-select" disabled>
+                              <option value="">{{passport.NoiSinh}}</option>
                             </select>
                           </div>
                           <div class="mb-3 col-md-6">
@@ -405,242 +360,93 @@
                               class="form-control"
                               id="organization"
                               name="cccd"
-                              placeholder="Nhập số CCCD"
+                              value="123456781"
+                              readonly
                             />
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="ngay_cap" class="form-label">Ngày cấp</label>
-                            <input class="form-control" type="date" value="2021-06-18" id="html5-date-input" />
+                            <input class="form-control" type="date" value="{{passport.NgayCapCCCD}}" id="html5-date-input" readonly/>
                           </div>
                           <div class="mb-3 col-md-3">
                             <label class="form-label" for="country">5. Dân tộc</label>
-                            <select id="country" class="select2 form-select">
-                              <option value="">Chọn dân tộc</option>
-                              <option value="01">Kinh (Việt)</option>
-                              <option value="02">Tày</option>
-                              <option value="03">Thái</option>
-                              <option value="04">Mường</option>
-                              <option value="05">Khmer</option>
-                              <option value="06">Hoa</option>
-                              <option value="07">Nùng</option>
-                              <option value="08">Mông</option>
-                              <option value="09">Dao</option>
-                              <option value="10">Gia Rai</option>
-                              <option value="11">Ê Đê</option>
-                              <option value="12">Ba Na</option>
-                              <option value="13">Sán Chay</option>
-                              <option value="14">Chăm</option>
-                              <option value="15">Cơ Ho</option>
-                              <option value="16">Xơ Đăng</option>
-                              <option value="17">Sán Dìu</option>
-                              <option value="18">Hrê</option>
-                              <option value="19">Raglay</option>
-                              <option value="20">Mnông</option>
-                              <option value="21">Thổ (4)</option>
-                              <option value="22">Xtiêng</option>
-                              <option value="23">Khơ mú</option>
-                              <option value="24">Bru Vân Kiều</option>
-                              <option value="25">Cơ Tu</option>
-                              <option value="26">Giáy</option>
-                              <option value="27">Tà Ôi</option>
-                              <option value="28">Mạ</option>
-                              <option value="29">Gié Triêng</option>
-                              <option value="30">Co</option>
-                              <option value="31">Chơ Ro</option>
-                              <option value="32">Xinh Mun</option>
-                              <option value="33">Hà Nhì</option>
-                              <option value="34">Chu Ru</option>
-                              <option value="35">Lào</option>
-                              <option value="36">La Chí</option>
-                              <option value="37">Kháng</option>
-                              <option value="38">Phù Lá</option>
-                              <option value="39">La Hủ</option>
-                              <option value="40">La Ha</option>
-                              <option value="41">Pà Thẻn</option>
-                              <option value="42">Lự</option>
-                              <option value="43">Ngái</option>
-                              <option value="44">Chứt</option>
-                              <option value="45">Lô Lô</option>
-                              <option value="46">Mảng</option>
-                              <option value="47">Cơ Lao</option>
-                              <option value="48">Bố Y</option>
-                              <option value="49">Cống</option>
-                              <option value="50">Si La</option>
-                              <option value="51">Pu Péo</option>
-                              <option value="52">Rơ Măm</option>
-                              <option value="53">Brâu</option>
-                              <option value="54">Ơ Đu</option>
-                              <option value="55">Dân tộc khác</option>
+                            <select id="country" class="select2 form-select" disabled>
+                              <option value="">{{passport.DanToc}}</option>
                             </select>
                           </div>
                           <div class="mb-3 col-md-3">
                             <label class="form-label" for="country">6. Tôn giáo</label>
-                            <select id="country" class="select2 form-select">
-                              <option value="">Chọn tôn giáo</option>
-                              <option value="0">Không có</option>
-                              <option value="1">Phật giáo</option>
-                              <option value="2">Kitô giáo</option>
-                              <option value="3">Công giáo</option>
-                              <option value="4">Tin Lành</option>
-                              <option value="5">Hòa Hảo</option>
-                              <option value="6">Cao Đài</option>
-                              <option value="7">Tôn giáo khác</option>
+                            <select id="country" class="select2 form-select" disabled>
+                              <option value="">{{passport.TonGiao}}</option>
                             </select>
                           </div>
                           <div class="mb-3 col-md-6">
                             <label class="form-label" for="phoneNumber">7. Số điện thoại</label>
                             <div class="input-group input-group-merge">
-                              <span class="input-group-text">VN (+84)</span>
+                              <span class="input-group-text readonly-style">VN (+84)</span>
                               <input
                                 type="text"
                                 id="phoneNumber"
                                 name="phoneNumber"
                                 class="form-control"
-                                placeholder="202 555 0111"
+                                value="{{passport.SoDienThoai}}"
+                                readonly
                               />
                             </div>
                           </div>
-                          <div class="mb-3 col-md-4">
+                          <div class="mb-3 col-md-12">
                             <label for="address" class="form-label">8. Địa chỉ đăng ký thường trú</label>
-                            <select class="select2 form-select" id='provinces' onchange='getProvinces(event)'>
-                              <option value=''>Chọn tỉnh thành</option>
-                            </select>                  
-                          </div>
-                          <div class="mb-3 col-md-4">
-                            <label for="address" class="form-label">Quận/huyện</label>
-                            <select class="select2 form-select" id='districts' onchange='getDistricts(event)'>
-                              <option value=''>Chọn quận/huyện</option>
-                            </select>               
-                          </div>
-                          <div class="mb-3 col-md-4">
-                            <label for="address" class="form-label">Địa chỉ</label>
-                            <input class="form-control" type="text" id="wards" name="wards" placeholder="Nhập số nhà, tên đường, tổ, khu phố, phường" />
+                            <input class="form-control" type="text" id="wards" name="wards" value="{{passport.DiaChiDangKyThuongTru}}" readonly/>
                           </div>
 
                           <div class="mb-3 col-md-12">
                             <label for="address" class="form-label">9. Địa chỉ đăng ký tạm trú</label>    
-                            <input class="form-control" type="text" id="diachi" placeholder="Nhập địa chỉ tạm trú" />
+                            <input class="form-control" type="text" id="diachi" value="{{passport.DiaChiDangKyTamTru}}" readonly/>
                           </div>
 
                           <div class="mb-3 col-md-6">
                             <label for="state" class="form-label">10. Nghề nghiệp</label>
-                            <input class="form-control" type="text" id="nghe"  placeholder="Nhập nghề nghiệp" />
+                            <input class="form-control" type="text" id="nghe"  value="{{passport.NgheNghiep}}" readonly/>
                           </div>
 
                           <div class="mb-3 col-md-6">
                             <label for="zipCode" class="form-label">11. Tên và địa chỉ cơ quan</label>
-                            <input class="form-control" type="text" id="ten_co_quan"  placeholder="Nhập tên cơ quan - Địa chỉ" />
+                            <input class="form-control" type="text" id="ten_co_quan"  value="{{passport.CoQuan}}"readonly/>
                           </div>
 
                           <div class="mb-3 col-md-6">
                             <label for="state" class="form-label">12. Họ tên cha</label>
-                            <input class="form-control" type="text" id="ho_ten_cha"  placeholder="Nhập họ tên cha" />
+                            <input class="form-control" type="text" id="ho_ten_cha"  value="{{passport.HoTenCha}}" readonly/>
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="ngay_cap" class="form-label">Ngày sinh</label>
-                            <input class="form-control" type="date" value="2000-01-01" id="html5-date-input" />
+                            <input class="form-control" type="date" value="{{passport.NgaySinhCha}}"  id="html5-date-input" readonly/>
                           </div>
 
                           <div class="mb-3 col-md-6">
                             <label for="zipCode" class="form-label">13. Họ tên mẹ</label>
-                            <input class="form-control" type="text" id="ho_ten_me"  placeholder="Nhập họ tên mẹ" />
+                            <input class="form-control" type="text" id="ho_ten_me"  value="{{passport.HoTenMe}}" readonly/>
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="ngay_cap" class="form-label">Ngày sinh</label>
-                            <input class="form-control" type="date" value="2000-01-01" id="html5-date-input" />
+                            <input class="form-control" type="date" value="{{passport.NgaySinhMe}}" id="html5-date-input" readonly/>
                           </div>
                           <!-- / Họ tên vợ chồng -->
                           <div class="mb-3 col-md-6">
                             <label for="zipCode" class="form-label">Họ tên Vợ/Chồng</label>
-                            <input class="form-control" type="text" id="ho_ten_vo_chong"  placeholder="Nhập họ tên vợ/chồng" />
+                            <input class="form-control" type="text" id="ho_ten_vo_chong"  value="{{passport.HoTenVoChong}}" readonly/>
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="ngay_cap" class="form-label">Ngày sinh</label>
-                            <input class="form-control" type="date" value="2000-01-01" id="html5-date-input" />
+                            <input class="form-control" type="date" value="{{passport.NgaySinhVoChong}}" id="html5-date-input" readonly/>
                           </div>
 
                           <div class="mb-3 col-md-12">
                             <label class="form-label" for="country">14. Cơ quan tiếp nhận</label>
-                            <select id="country" class="select2 form-select">
-                              <option value="">Chọn nơi tiếp nhận</option>
-                              <option value="0">Cục Quản lý XNC tại TP Hồ Chí Minh</option>
-                              <option value="1">Cục Quản lý XNC tại Hà Nội</option>
-                              <option value="2">Phòng Quản lý XNC - Công an tỉnh An Giang - Cơ sở 1</option>
-                              <option value="3">Phòng Quản lý XNC - Công an tỉnh An Giang - Cơ sở 2</option>
-                              <option value="4">Phòng Quản lý XNC - Công an tỉnh An Giang - Cơ sở 3</option>
-                              <option value="5">Phòng Quản lý XNC - Công an tỉnh Bắc Kạn</option>
-                              <option value="6">Phòng Quản lý XNC - Công an tỉnh Bình Định</option>
-                              <option value="7">Phòng Quản lý XNC - Công an tỉnh Bắc Giang</option>
-                              <option value="8">Phòng Quản lý XNC - Công an tỉnh Bình Thuận</option>
-                              <option value="9">Phòng Quản lý XNC - Công an tỉnh Bạc Liêu</option>
-                              <option value="10">Phòng Quản lý XNC - Công an tỉnh Bắc Ninh</option>
-                              <option value="11">Phòng Quản lý XNC - Công an tỉnh Bình Phước</option>
-                              <option value="12">Phòng Quản lý XNC - Công an tỉnh Bến Tre</option>
-                              <option value="13">Phòng Quản lý XNC - Công an tỉnh Bình Dương</option>
-                              <option value="14">Phòng Quản lý XNC - Công an tỉnh Cao Bằng</option>
-                              <option value="15">Phòng Quản lý XNC - Công an tỉnh Cà Mau</option>
-                              <option value="16">Phòng Quản lý XNC - Công an tỉnh Cần Thơ</option>
-                              <option value="17">Phòng Quản lý XNC - Công an tỉnh Đồng Nai</option>
-                              <option value="18">Phòng Quản lý XNC - Công an tỉnh Điện Biên</option>
-                              <option value="19">Phòng Quản lý XNC - Công an tỉnh Đắk Lắk</option>
-                              <option value="20">Phòng Quản lý XNC - Công an TP Đà Nẵng</option>
-                              <option value="21">Phòng Quản lý XNC - Công an tỉnh Đắk Nông</option>
-                              <option value="22">Phòng Quản lý XNC - Công an tỉnh Đồng Tháp</option>
-                              <option value="23">Phòng Quản lý XNC - Công an tỉnh Gia Lai</option>
-                              <option value="24">Phòng Quản lý XNC - Công an tỉnh Hà Nam</option>
-                              <option value="25">Phòng Quản lý XNC - Công an tỉnh Hòa Bình</option>
-                              <option value="26">Phòng Quản lý XNC - Công an tỉnh Hải Dương</option>
-                              <option value="27">Phòng Quản lý XNC - Công an tỉnh Hà Giang</option>
-                              <option value="28">Phòng Quản lý XNC - Công an tỉnh Hà Tĩnh</option>
-                              <option value="29">Phòng Quản lý XNC - Công an tỉnh Hậu Giang</option>
-                              <option value="30">Phòng Quản lý XNC - Công an TP Hồ Chí Minh</option>
-                              <option value="31">Phòng Quản lý XNC - Công an TP Hà Nội - Cơ sở 1</option>
-                              <option value="32">Phòng Quản lý XNC - Công an TP Hà Nội - Cơ sở 2</option>
-                              <option value="33">Phòng Quản lý XNC - Công an TP Hải Phòng</option>
-                              <option value="34">Phòng Quản lý XNC - Công an tỉnh Thừa Thiên Huế</option>
-                              <option value="35">Phòng Quản lý XNC - Công an tỉnh Hưng Yên</option>
-                              <option value="36">Phòng Quản lý XNC - Công an tỉnh Kiên Giang - Cơ sở 1</option>
-                              <option value="37">Phòng Quản lý XNC - Công an tỉnh Kiên Giang - Cơ sở 2</option>
-                              <option value="38">Phòng Quản lý XNC - Công an tỉnh Kiên Giang - Cơ sở 3</option>
-                              <option value="39">Phòng Quản lý XNC - Công an tỉnh Khánh Hòa</option>
-                              <option value="40">Phòng Quản lý XNC - Công an tỉnh Kon Tum</option>
-                              <option value="41">Phòng Quản lý XNC - Công an tỉnh Long An</option>
-                              <option value="42">Phòng Quản lý XNC - Công an tỉnh Lào Cai</option>
-                              <option value="43">Phòng Quản lý XNC - Công an tỉnh Lâm Đồng</option>
-                              <option value="44">Phòng Quản lý XNC - Công an tỉnh Lai Châu</option>
-                              <option value="45">Phòng Quản lý XNC - Công an tỉnh Lạng Sơn</option>
-                              <option value="46">Phòng Quản lý XNC - Công an tỉnh Nghệ An</option>
-                              <option value="47">Phòng Quản lý XNC - Công an tỉnh Ninh Bình</option>
-                              <option value="48">Phòng Quản lý XNC - Công an tỉnh Nam Định</option>
-                              <option value="49">Phòng Quản lý XNC - Công an tỉnh Ninh Thuận</option>
-                              <option value="50">Phòng Quản lý XNC - Công an tỉnh Phú Thọ</option>
-                              <option value="51">Phòng Quản lý XNC - Công an tỉnh Phú Yên</option>
-                              <option value="52">Phòng Quản lý XNC - Công an tỉnh Quảng Nam - Cơ sở 1</option>
-                              <option value="53">Phòng Quản lý XNC - Công an tỉnh Quảng Nam - Cơ sở 2</option>
-                              <option value="54">Phòng Quản lý XNC - Công an tỉnh Quảng Bình</option>
-                              <option value="55">Phòng Quản lý XNC - Công an tỉnh Quảng Ngãi</option>
-                              <option value="56">Phòng Quản lý XNC - Công an tỉnh Quảng Ninh - Cơ sở 1</option>
-                              <option value="57">Phòng Quản lý XNC - Công an tỉnh Quảng Ninh - Cơ sở 2</option>
-                              <option value="58">Phòng Quản lý XNC - Công an tỉnh Quảng Trị</option>
-                              <option value="59">Phòng Quản lý XNC - Công an tỉnh Sơn La</option>
-                              <option value="60">Phòng Quản lý XNC - Công an tỉnh Sóc Trăng</option>
-                              <option value="61">Phòng Quản lý XNC - Công an tỉnh Thái Bình</option>
-                              <option value="62">Phòng Quản lý XNC - Công an tỉnh Tiền Giang</option>
-                              <option value="63">Phòng Quản lý XNC - Công an tỉnh Thanh Hóa</option>
-                              <option value="64">Phòng Quản lý XNC - Công an tỉnh Tây Ninh</option>
-                              <option value="65">Phòng Quản lý XNC - Công an tỉnh Thái Nguyên</option>
-                              <option value="66">Phòng Quản lý XNC - Công an tỉnh Tuyên Quang</option>
-                              <option value="67">Phòng Quản lý XNC - Công an tỉnh Trà Vinh</option>
-                              <option value="68">Phòng Quản lý XNC - Công an tỉnh Vĩnh Long</option>
-                              <option value="69">Phòng Quản lý XNC - Công an tỉnh Vĩnh Phúc</option>
-                              <option value="70">Phòng Quản lý XNC - Công an tỉnh Bà Rịa - Vũng Tàu</option>
-                              <option value="71">Phòng Quản lý XNC - Công an tỉnh Yên Bái</option>
+                            <select id="country" class="select2 form-select" disabled>
+                              <option value="">{{passport.NoiTiepNhan}}</option>
                             </select>
                           </div>
-                        <div class="mt-2">
-                          <button type="submit" class="btn btn-primary me-2">Xác nhận</button>
-                          <button type="reset" class="btn btn-outline-secondary">Hủy</button>
-                        </div>
                       </form>
                     </div>
                     <!-- /Account -->
@@ -714,54 +520,54 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <script>
       fetch('https://vn-public-apis.fpo.vn/provinces/getAll?limit=-1')
-      .then(response => response.json())
-      .then(data => {
-        let provinces = data.data.data;
-        provinces.map(value => document.getElementById('provinces').innerHTML += `<option value='${value.code}'>${value.name}</option>`);
-      })
-      .catch(error => {
-        console.error('Lỗi khi gọi API:', error);
-      });
-
-    function fetchDistricts (provincesID) {
-      fetch(`https://vn-public-apis.fpo.vn/districts/getByProvince?provinceCode=${provincesID}&limit=-1`)
         .then(response => response.json())
         .then(data => {
-          let districts = data.data.data;
-          document.getElementById('districts').innerHTML = `<option value=''>Chọn quận/huyện</option>`;
-          if (districts !== undefined) {
-            districts.map(value => document.getElementById('districts').innerHTML += `<option value='${value.code}'>${value.name}</option>`);
-          }
+          let provinces = data.data.data;
+          provinces.map(value => document.getElementById('provinces').innerHTML += `<option value='${value.code}'>${value.name}</option>`);
         })
         .catch(error => {
           console.error('Lỗi khi gọi API:', error);
         });
-    }
 
-    function fetchWards (districtsID) {
-      fetch(`https://vn-public-apis.fpo.vn/wards/getByDistrict?districtCode=${districtsID}&limit=-1`)
-        .then(response => response.json())
-        .then(data => {
-          let wards = data.data.data;
-          document.getElementById('wards').innerHTML = `<option value=''>-- select wards --</option>`;
-          if (wards !== undefined) {
-            wards.map(value => document.getElementById('wards').innerHTML += `<option value='${value.code}'>${value.name}</option>`);
-          }
-        })
-        .catch(error => {
-          console.error('Lỗi khi gọi API:', error);
-        });
-    }
+      function fetchDistricts(provincesID) {
+        fetch(`https://vn-public-apis.fpo.vn/districts/getByProvince?provinceCode=${provincesID}&limit=-1`)
+          .then(response => response.json())
+          .then(data => {
+            let districts = data.data.data;
+            document.getElementById('districts').innerHTML = `<option value=''>Chọn quận/huyện</option>`;
+            if (districts !== undefined) {
+              districts.map(value => document.getElementById('districts').innerHTML += `<option value='${value.code}'>${value.name}</option>`);
+            }
+          })
+          .catch(error => {
+            console.error('Lỗi khi gọi API:', error);
+          });
+      }
 
-    function getProvinces (event) {
-      fetchDistricts(event.target.value);
-      document.getElementById('wards').innerHTML = `<option value=''>-- select wards --</option>`;
-    }
+      function fetchWards(districtsID) {
+        fetch(`https://vn-public-apis.fpo.vn/wards/getByDistrict?districtCode=${districtsID}&limit=-1`)
+          .then(response => response.json())
+          .then(data => {
+            let wards = data.data.data;
+            document.getElementById('wards').innerHTML = `<option value=''>-- select wards --</option>`;
+            if (wards !== undefined) {
+              wards.map(value => document.getElementById('wards').innerHTML += `<option value='${value.code}'>${value.name}</option>`);
+            }
+          })
+          .catch(error => {
+            console.error('Lỗi khi gọi API:', error);
+          });
+      }
 
-    function getDistricts (event) {
-      fetchWards(event.target.value);
-    }
-      </script>
+      function getProvinces(event) {
+        fetchDistricts(event.target.value);
+        document.getElementById('wards').innerHTML = `<option value=''>-- select wards --</option>`;
+      }
+
+      function getDistricts(event) {
+        fetchWards(event.target.value);
+      }
+    </script>
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js")}}"></script>
   </body>

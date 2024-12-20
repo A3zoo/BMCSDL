@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.secret_key = "ENTER_YOUR_SECRET_KEY"
 @app.route('/')
 def login():
-    return render_template('app/html/login_mh1.html')
+    return render_template('app/html/login.html')
 
 app.register_blueprint(auth_views, url_prefix='/auth')
 app.register_blueprint(passportCT, url_prefix='/passport')

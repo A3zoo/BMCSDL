@@ -17,7 +17,7 @@
   class="light-style layout-menu-fixed"
   dir="ltr"
   data-theme="theme-default"
-  data-assets-path={{url_for("static", filename="assets/")}}"
+  data-assets-path="../assets/"
   data-template="vertical-menu-template-free"
 >
   <head>
@@ -32,7 +32,7 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href={{url_for("static", filename="assets/img/favicon/favicon.ico")}}" />
+    <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -63,37 +63,6 @@
   </head>
 
   <body>
-    <table border="1">
-      <thead>
-          <tr>
-              <th>ID</th>
-              <th>Họ và Tên</th>
-              <th>Giới Tính</th>
-              <th>Ngày Sinh</th>
-              <th>Nơi Sinh</th>
-              <th>Số CCCD</th>
-              <th>Ngày Cấp CCCD</th>
-              <th>Địa Chỉ</th>
-              <th>Trạng Thái</th>
-          </tr>
-      </thead>
-      <tbody>
-          {% for passport in listpassportdata %}
-              <tr>
-                  <td>{{ passport.Id }}</td>
-                  <td>{{ passport.HoVaTen }}</td>
-                  <td>{{ passport.GioiTinh }}</td>
-                  <td>{{ passport.SinhNgay }}</td>
-                  <td>{{ passport.NoiSinh }}</td>
-                  <td>{{ passport.SoCCCD }}</td>
-                  <td>{{ passport.NgayCapCCCD }}</td>
-                  <td>{{ passport.DiaChiDangKyThuongTru }}</td>
-                  <td href="/updatestatus?cccd={passport.SoCCCD};">{{ passport.TrangThai }}</td>
-                
-              </tr>
-          {% endfor %}
-      </tbody>
-  </table>
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
@@ -101,7 +70,7 @@
 
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
           <div class="app-brand demo">
-            <a href="danh_sach_yeu_cau_cho_xac_thuc_mh4.html" class="app-brand-link">
+            <a href="danh_sach_yeu_cau_cho_phe_duyet_mh7.html" class="app-brand-link">
               <span class="app-brand-logo demo">
                 <svg
                   width="25"
@@ -169,7 +138,7 @@
 
           <ul class="menu-inner py-1">
             <li class="menu-item active">
-              <a href="danh_sach_yeu_cau_cho_xac_thuc_mh4.html" class="menu-link">
+              <a href="danh_sach_yeu_cau_cho_phe_duyet_mh7.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-table"></i>
                 <div data-i18n="Tables">Danh sách yêu cầu</div>
               </a>
@@ -225,7 +194,7 @@
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                      <img src={{url_for("static", filename="assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle")}}" />
+                      <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
                     </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
@@ -234,7 +203,7 @@
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar avatar-online">
-                              <img src={{url_for("static", filename="assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle")}}" />
+                              <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
                             </div>
                           </div>
                           <div class="flex-grow-1">
@@ -263,7 +232,7 @@
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="login_mh1.html">
+                      <a class="dropdown-item" href="{{url_for('auth.logout')}}">
                         <i class="bx bx-power-off me-2"></i>
                         <span class="align-middle">Đăng xuất</span>
                       </a>
@@ -287,66 +256,62 @@
               <!-- Basic Bootstrap Table -->
               <div class="card">
                 <div class="table-responsive text-nowrap">
+                  <thead>
+                    
+                </thead>
+                <tbody>
+                    
+                </tbody>
                   <table class="table">
                     <thead>
                       <tr>
-                        <th>Họ tên</th>
-                        <th>Giới tính</th>
-                        <th>Ngày sinh</th>
-                        <th>CCCD</th>
-                        <th>SDT</th>
-                        <th></th>
-                      </tr>
+                        <th>Họ và Tên</th>
+                        <th>Giới Tính</th>
+                        <th>Ngày Sinh</th>
+                        <th>Nơi Sinh</th>
+                        <th>Số CCCD</th>
+                        <th>Ngày Cấp CCCD</th>
+                        <th>Địa Chỉ</th>
+                        <th>Trạng Thái</th>
+                    </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                      <tr>
-                        <td> Nguyễn Văn A</td>
-                        <td> Nam</td>
-                        <td> 11/1/1999</td>
-                        <td>609484332423</td>
-                        <td>
-                          09341358421
-                        </td>
-                        <td>
-                          <a href = "chi_tiet_yeu_cau_mh5.html">
-                            <button type="button" class="btn btn-outline-primary me-2">Chi tiết</button>
-                          </a>
-                          <button type="button" class="btn btn-primary me-2">Gửi yêu cầu</button>
-                          <button type="button" class="btn btn-danger" onclick="confirmAction()">Từ chối</button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td> Nguyễn Văn A</td>
-                        <td> Nam</td>
-                        <td> 11/1/1999</td>
-                        <td>609484332423</td>
-                        <td>
-                          09341358421
-                        </td>
-                        <td>
-                          <a href = "chi_tiet_yeu_cau_mh5.html">
-                            <button type="button" class="btn btn-outline-primary me-2">Chi tiết</button>
-                          </a>
-                          <button type="button" class="btn btn-primary me-2">Gửi yêu cầu</button>
-                          <button type="button" class="btn btn-danger" onclick="confirmAction()">Từ chối</button>
-                        </td>  
-                      </tr>
-                      <tr>
-                        <td> Nguyễn Văn A</td>
-                        <td> Nam</td>
-                        <td> 11/1/1999</td>
-                        <td>609484332423</td>
-                        <td>
-                          09341358421
-                        </td>
-                        <td>
-                          <a href = "chi_tiet_yeu_cau_mh5.html">
-                            <button type="button" class="btn btn-outline-primary me-2">Chi tiết</button>
-                          </a>
-                          <button type="button" class="btn btn-primary me-2">Gửi yêu cầu</button>
-                          <button type="button" class="btn btn-danger" onclick="confirmAction()">Từ chối</button>
-                        </td>
-                      </tr>
+                      {% for passport in listpassportdata %}
+                        <tr id="{{ passport.SoCCCD }}">
+                            <td>{{ passport.HoVaTen }}</td>
+                            <td>
+                              {% if passport.GioiTinh == 1 %}
+                                  Nam
+                              {% elif passport.GioiTinh == 0 %}
+                                  Nữ
+                              {% else %}
+                                  Không xác định
+                              {% endif %}
+                            </td>
+                            <td>{{ passport.SinhNgay }}</td>
+                            <td>{{ passport.NoiSinh }}</td>
+                            <td>{{ passport.SoCCCD }}</td>
+                            <td>{{ passport.NgayCapCCCD }}</td>
+                            <td>{{ passport.DiaChiDangKyThuongTru }}</td>
+                            <td>
+                              {% if passport.TrangThai == 1 %}
+                                  <span class="badge bg-label-warning me-1">Chờ xác thực</span>
+                              {% elif passport.TrangThai == 2 %}
+                                  <span class="badge bg-label-info me-1">Chờ phê duyệt</span>
+                              {% elif passport.TrangThai == 3 %}
+                                  <span class="badge bg-label-success me-1">Đã phê duyệt</span>
+                              {% elif passport.TrangThai == 4 %}
+                                  <span class="badge bg-label-danger me-1">Từ chối</span>
+                              {% else %}
+                                  <span class="badge bg-label-secondary me-1">Không xác định</span>
+                              {% endif %}
+                            </td>
+                            <td>
+                              <button type="button" class="btn btn-primary me-2" onclick="updateStatus('{{ passport.SoCCCD }}', 2)">Xác thực</button>
+                              <button type="button" class="btn btn-danger" onclick="updateStatus('{{ passport.SoCCCD }}', 4)">Từ chối</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
                     </tbody>
                   </table>
                 </div>
@@ -408,7 +373,33 @@
     <script src="{{url_for("static", filename="assets/vendor/libs/popper/popper.js")}}"></script>
     <script src="{{url_for("static", filename="assets/vendor/js/bootstrap.js")}}"></script>
     <script src="{{url_for("static", filename="assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js")}}"></script>
-
+    <script>
+      async function updateStatus(cccd, aggre) {
+          console.log(1)
+          fetch('/passport/updatestatus', {
+            method: 'PUT', // Phương thức PUT
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ cccd: cccd, aggre: aggre }) // Dữ liệu gửi đi
+          }).then(response => {
+            alert(response); 
+            // Kiểm tra nếu phản hồi thành công (status code 200 OK)
+            if (!response.ok) {
+                throw new Error(`Server responded with ${response.status}`);
+            }
+            return response.json(); // Chuyển đổi phản hồi JSON thành JavaScript object
+        })
+          .then(data => {
+            // Xóa hàng tr có id là cccd
+            const row = document.getElementById(cccd);
+            if (row) {
+                row.remove();
+            }
+        });
+        }
+    </script>
+    
     <script src="{{url_for("static", filename="assets/vendor/js/menu.js")}}"></script>
     <!-- endbuild -->
 
@@ -416,7 +407,6 @@
 
     <!-- Main JS -->
     <script src="{{url_for("static", filename="assets/js/main.js")}}"></script>
-    
     <script>
       function confirmAction() {
           const result = confirm("Bạn chưa xem chi tiết. Bạn có chắc chắn muốn từ chối?");

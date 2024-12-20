@@ -282,7 +282,7 @@
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="login_mh1.html">
+                      <a class="dropdown-item" href="{{url_for('auth.logout')}}">
                         <i class="bx bx-power-off me-2"></i>
                         <span class="align-middle">Đăng xuất</span>
                       </a>
@@ -338,25 +338,24 @@
                             <div class="d-flex align-items-center mt-2">
                               <div class="form-check me-3">
                                 <input
-                                  name="nam"
+                                  name="gioiTinh" 
                                   class="form-check-input"
                                   type="radio"
                                   value="1"
                                   id="nam"
-                                  checked
                                   required
                                 />
-                                <label class="form-check-label" for="defaultRadio1">Nam</label>
+                                <label class="form-check-label" for="nam">Nam</label>
                               </div>
                               <div class="form-check">
                                 <input
-                                  name="nu"
+                                  name="gioiTinh" 
                                   class="form-check-input"
                                   type="radio"
                                   value="0"
                                   id="nu"
                                 />
-                                <label class="form-check-label" for="defaultRadio2">Nữ</label>
+                                <label class="form-check-label" for="nu">Nữ</label>
                               </div>
                             </div>
                           </div>
@@ -442,8 +441,9 @@
                               class="form-control"
                               id="cccd"
                               name="cccd"
+                              value="123456781"
                               placeholder="Nhập số CCCD"
-                              required pattern="^\d{12}$" title="CCCD phải có 12 chữ số"
+                              readonly
                             />
                             <div id="error-cccd" class="error-message">CCCD phải có 12 chữ số.</div>
                           </div>

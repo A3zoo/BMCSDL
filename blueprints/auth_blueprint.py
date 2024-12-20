@@ -3,6 +3,7 @@ from flask import session, redirect, url_for, request
 from models.UserAccount import get_account_by_cccd_pw
 from models.PassportInfor import get_all_passport_data, get_passport_data
 from models.Audit import get_all_audit
+
 auth_views = Blueprint("auth", __name__)
 
 @auth_views.route("/login", strict_slashes=False, methods=["GET", "POST"])
@@ -22,7 +23,7 @@ def login():
         # RESIDENT, XT, XD, LT, GS
         if session['vt'] == 'XT':
             data = get_all_passport_data()
-            return render_template("app/html/danh_sach_yeu_cau_cho_xac_thuc_mh4.html", listpassportdata =  data)
+            return render_template("app/html/XT.html", listpassportdata =  data)
         elif session['vt'] == 'XD':
             data = get_all_passport_data()
             return render_template("app/html/XD.html", listpassportdata =  data)
@@ -32,9 +33,11 @@ def login():
         elif session['vt'] == 'GS':
             data = get_audit_trails_for_passport()
             return render_template('app/html/GS.html', audit_trails = data)
-        
-        return render_template("app/html/nguoi_dang_ky_mh2.html", duy =  result)
-    return render_template("login.html")
+        passport = get_passport_data(session['cccd'])
+        if passport:
+            return render_template("app/html/profile.html", passport = passport)
+        return render_template("app/html/RESIDENT.html", bach =  result)
+    return redirect("/")
 
 def get_audit_trails_for_passport():
     return get_all_audit()
