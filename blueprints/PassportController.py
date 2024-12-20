@@ -1,6 +1,6 @@
 from flask import Blueprint, request, render_template, redirect, flash, jsonify
 from flask import Flask, session, redirect, url_for, request
-from models.PassportInfor import update_status_passport_data_by_cccd,create_passport_data as insert_passport, get_all_passport_data
+from models.PassportInfor import update_status_passport_data_by_cccd,create_passport_data as insert_passport, get_all_passport_data, get_passport_data
 from blueprints.middleware import auth_middleware
 from models.PassportInfor  import PassportDataModel
 
@@ -11,8 +11,14 @@ passportCT = Blueprint("passport", __name__)
 def register_passport():    
     if request.method == "POST":
         # Xử lý giới tính
-        gender = 1 if request.form.get("nam") else 0  # 'nam' trả về 1, 'nu' trả về 0
-        
+        gioiTinh = request.form.get("gioiTinh")
+        print(f"Giá trị gioiTinh nhận được: {gioiTinh}")
+        if gioiTinh == "1":
+            gender = 1 
+        else:
+            gender = 0 
+
+        print(f"Giá trị gioiTinh nhận được: {gender}")
         # Gộp địa chỉ thường trú từ tỉnh, quận, huyện
         dia_chi_thuong_tru = ", ".join(
             filter(None, [
@@ -53,6 +59,7 @@ def register_passport():
         # Chèn dữ liệu vào cơ sở dữ liệu
         passport = insert_passport(data)  
         if passport:
+            passport = get_passport_data(session['cccd'])
             flash("Thêm hộ chiếu thành công!", "success")
             return render_template('app/html/profile.html', passport=passport)
         
