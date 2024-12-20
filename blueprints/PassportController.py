@@ -1,8 +1,9 @@
 from flask import Blueprint, request, render_template, redirect, flash, jsonify
 from flask import Flask, session, redirect, url_for, request
-from models.PassportInfor import update_status_passport_data_by_cccd,create_passport_data as insert_passport, get_all_passport_data
+from models.PassportInfor import update_status_passport_data_by_cccd,create_passport_data as insert_passport, get_all_passport_data, get_passport_data
 from blueprints.middleware import auth_middleware
 from models.PassportInfor  import PassportDataModel
+from models.ResidentData import get_passport_data as resident_data
 
 passportCT = Blueprint("passport", __name__)
 
@@ -84,5 +85,14 @@ def update_status():
     result = update_status_passport_data_by_cccd(cccd, aggre)
     return jsonify({"message": str_dir[result.TrangThai] + str(result.SoCCCD)})
     
+
+@passportCT.route("/XemChiTiet", methods=["PUT"],strict_slashes=False)
+def get_chi_tiet():
+    passport = get_passport_data(session['cccd'])
+    if session['vt'] == 'XD':
+        return render_template("app/html/XDCT.html", passport = passport)
+    resident = resident_data(session['cccd'])
+    return render_template("app/html/XTCT.html", passport = passport, resident = resident)
+
 
 
